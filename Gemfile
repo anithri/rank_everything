@@ -57,3 +57,16 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+
+group :development, :test do
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rspec-rails"
+  gem "rubocop"
+  gem "rubocop-factory_bot", require: false
+  gem "rubocop-faker", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-rspec_rails", require: false
+end
