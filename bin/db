@@ -1,0 +1,133 @@
+#!/bin/bash -e
+
+fail_unless_env() {
+  if [[ -z ${!1} ]];then
+    echo "ERROR: $1 not present in ENV"
+    exit 1
+  fi
+}
+
+check_env() {
+  fail_unless_env POSTGRES_COMPOSE
+  fail_unless_env POSTGRES_PASSWORD
+  fail_unless_env POSTGRES_VOLUME
+  fail_unless_env POSTGRES_COMPOSE
+  fail_unless_env POSTGRES_PASSWORD
+  fail_unless_env POSTGRES_USER
+  fail_unless_env POSTGRES_PORT
+  fail_unless_env POSTGRES_VERSION
+  fail_unless_env POSTGRES_HOST
+}
+
+delete_schema() {
+  if [[ -e db/schema.rb ]]; then
+    rm db/schema.rb 2> /dev/null || true
+  fi
+}
+
+delete_volume() {
+  if [[ -d $POSTGRES_VOLUME ]]; then
+    sudo rm -rf $POSTGRES_VOLUME
+    mkdir $POSTGRES_VOLUME
+  fi
+}
+
+usage () {
+  echo "usage: `basename $0` 'start|stop|status|down --purge|setup|migrate|seed|reset --purge"
+  echo ""
+  echo "           start|stop|status|down   are docker commands"
+  echo "           setup|migrate|seed|reset are rails command"
+}
+
+do_start () {
+  docker compose -f $POSTGRES_COMPOSE up -d
+}
+
+do_stop () {
+  docker compose -f $POSTGRES_COMPOSE stop
+}
+
+do_down () {
+  docker compose -f $POSTGRES_COMPOSE down --volumes
+  sudo rm -rf tmp/db
+}
+
+do_status () {
+  echo $@
+  docker compose -f $POSTGRES_COMPOSE ps
+}
+
+do_reset () {
+  delete_schema
+  rails db:drop db:create db:migrate db:seed
+}
+
+do_setup() {
+  rails db:create db:migrate db:seed
+}
+
+do_migrate() {
+  rails db:migrate
+}
+
+do_seed() {
+  rails db:seed
+}
+
+check_env
+
+case $1 in
+  start)
+    do_start
+  ;;
+  stop)
+    do_stop
+  ;;
+  status)
+    do_status
+  ;;
+  down)
+    do_down
+  ;;
+  setup)
+    do_setup
+  ;;
+  migrate)
+    do_migrate
+  ;;
+  seed)
+    do_seed
+  ;;
+  reset)
+    do_reset
+  ;;
+  *)
+    usage
+  ;;
+esac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/random_env"
+require 'highline'
+require 'pathname'
+file = Pathname.new(".env.generated")
+
+if file.exist?
+  warn "File already exists.  Please delete it before running this script."
+  exit 1
+end
+
+postgres_pass = RandomEnv.token
+developer_pass = RandomEnv.token
+username = RandomEnv.username
+port = RandomEnv.port
+secret = RandomEnv.secret_key_base
+cli = HighLine.new
+
+cli.ask("Enter a postgres version") { |q| q.default = "15" }
+
+postgres_user = cli.ask("Enter a postgres username:") { |q| q.default = username }
+
+postgres_port = cli.ask("Enter a postgres port") { |u| u.default = port }
+
+cli.say("Developer name, and email are optional and used to seed the database.")
+developer_name = cli.ask("Enter a developer name")
+developer_email = cli.ask("Enter a developer email")
+
+cli.say(".env is being generated.  Please edit it to your liking.")
+
+template = <<~END_TEMPLATE
+  # this is used to locate files and set the path.  leave unset if using direnv
+  # Leaving this as . should be fine, but will require you to be in the root directory
+  # of the project when using the randomize and db commands
+  PROJECT_DIR=#{Dir.pwd}
+  PROJECT_NAME=#{File.basename(Dir.pwd)}
+  # This is used by db command to instantiate the database
+  
+  POSTGRES_VOLUME=${PROJECT_DIR}/tmp/db/data # change if you want.
+  POSTGRES_COMPOSE=${PROJECT_DIR}/db.docker-compose.yml
+  
+  # These are used to create the db docker container, and in config/database to connect
+  POSTGRES_USER=#{postgres_user}
+  POSTGRES_PASSWORD=#{postgres_pass}
+  POSTGRES_PORT=#{postgres_port}
+  
+  # this is also used to name the db container.
+  # It must be changed manually in ~/db.docker-compose.yml
+  POSTGRES_VERSION=15
+  
+  POSTGRES_HOST=127.0.0.1
+  
+  # the DEVELOPER_... variables are used in seeding users to ensure there is one user that can sign in
+  # it wom't seed a developer unless _NAME and _PASSWORD are present
+  DEVELOPER_NAME=#{developer_name}
+  DEVELOPER_EMAIL=#{developer_email}
+  DEVELOPER_PASS=#{developer_pass}
+  # SECRET_KEY_BASE=#{secret}
+  
+END_TEMPLATE
+
+file.write(template)

@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'pathname'
+file = Pathname(ENV['POSTGRES_COMPOSE'])
+
+if file.exist?
+  puts "File exists, please remove it first."
+  exit 1
+end
+
+EXPECTED_ENV_VARS = %w[PROJECT_NAME POSTGRES_VERSION]
+EXPECTED_ENV_VARS.each do |var|
+  if ENV[var].nil?
+    puts "Missing #{var} env var"
+    exit 1
+  end
+end
+
+template = <<~TEMPLATE
+  ---
+  services:
+    #{ENV['PROJECT_NAME']}_pg_#{ENV["POSTGRES_VERSION"]}:
+      image: postgres:#{ENV["POSTGRES_VERSION"]}s
+      environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      volumes:
+        - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
+      ports:
+        - ${POSTGRES_PORT}:5432
+TEMPLATE
+
+file.write(template)

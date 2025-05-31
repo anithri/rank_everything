@@ -1,0 +1,11 @@
+---
+services:
+  rank_everything_pg_15:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT}:5432
