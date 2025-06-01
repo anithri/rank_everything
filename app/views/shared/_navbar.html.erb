@@ -1,22 +1,22 @@
 <!-- Navbar -->
 <nav class="navbar justify-between bg-base-300 items-center">
   <div class="flex flex-row align-center">
-  <!-- Logo -->
-  <a class="btn btn-ghost text-lg" href="/">
-    <%= icon "numbered-list" %>
-    Rank Everything
-  </a>
-  <nav class="breadcrumbs text-sm inline-block">
-    <ul class="pt-1">
-      <%= render_breadcrumbs tag: :li, separator: "" %>
-    </ul>
-  </nav>
-  <%#= render_breadcrumbs %>
+    <!-- Logo -->
+    <a class="btn btn-ghost text-lg" href="/">
+      <%= heroicon "numbered-list", class: "size-6" %>
+      Rank Everything
+    </a>
+    <nav class="breadcrumbs text-sm inline-block">
+      <ul class="pt-1">
+        <%= render_breadcrumbs tag: :li, separator: "" %>
+      </ul>
+    </nav>
+    <%#= render_breadcrumbs %>
   </div>
   <!-- Menu for mobile -->
   <div class="dropdown dropdown-end sm:hidden">
     <button class="btn btn-ghost">
-      <%= icon "bars-3" %>
+      <%= heroicon "bars-3", class: "size-4" %>
       <i class="fa-solid fa-bars text-lg"></i>
     </button>
 
@@ -34,10 +34,14 @@
     <li>
       <%= link_to "About", about_path %>
     </li>
-    <% if Current.user %>
-      <%= Current.user.name %>>
+    <% if authenticated? %>
+      <li>
+        <%= Current.user.name %>
+      </li>
     <% else %>
-      <%= link_to "Login", new_session_path, class: "btn btn-sm btn-primary" %>
+      <li>
+        <%= link_to "Login", new_session_path, class: "btn btn-sm btn-primary" %>
+      </li>
     <% end %>
   </ul>
 </nav>
