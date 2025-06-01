@@ -34,7 +34,10 @@
     <li>
       <%= link_to "About", about_path %>
     </li>
-    <li><a>Contact</a></li>
-    <a class="btn btn-sm btn-primary">Log in</a>
+    <% if Current.user %>
+      <%= Current.user.name %>>
+    <% else %>
+      <%= link_to "Login", new_session_path, class: "btn btn-sm btn-primary" %>
+    <% end %>
   </ul>
 </nav>
