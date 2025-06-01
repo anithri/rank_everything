@@ -4,5 +4,6 @@ class PagesController < ApplicationController
   end
 
   def about
+    add_breadcrumb "About", :about_path
   end
 end

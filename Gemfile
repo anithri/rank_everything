@@ -70,3 +70,9 @@ group :development, :test do
   gem "rubocop-rspec", require: false
   gem "rubocop-rspec_rails", require: false
 end
+
+gem "rails_icons", "~> 1.3"
+
+gem "breadcrumbs_on_rails", "~> 4.1"
+
+gem "chrome_devtools_rails", "~> 0.1.0"

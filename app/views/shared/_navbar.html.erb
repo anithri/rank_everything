@@ -1,0 +1,43 @@
+<!-- Navbar -->
+<nav class="navbar justify-between bg-base-300 items-center">
+  <div class="flex flex-row align-center">
+  <!-- Logo -->
+  <a class="btn btn-ghost text-lg" href="/">
+    <%= icon "numbered-list" %>
+    Rank Everything
+  </a>
+  <nav class="breadcrumbs text-sm inline-block">
+    <ul>
+      <li><a>Home</a></li>
+      <li><a>Documents</a></li>
+      <li>Add Document</li>
+      <%= render_breadcrumbs builder: Breadcrumbs::TailwindBuilder %>
+    </ul>
+  </nav>
+  <%#= render_breadcrumbs %>
+  </div>
+  <!-- Menu for mobile -->
+  <div class="dropdown dropdown-end sm:hidden">
+    <button class="btn btn-ghost">
+      <%= icon "bars-3" %>
+      <i class="fa-solid fa-bars text-lg"></i>
+    </button>
+
+    <ul tabindex="0" class="dropdown-content menu z-[1] bg-base-200 p-6 rounded-box shadow w-56 gap-2">
+      <li>
+        <%= link_to "About", about_path %>
+      </li>
+      <li><a>Contact</a></li>
+      <a class="btn btn-sm btn-primary">Log in</a>
+    </ul>
+  </div>
+
+  <!-- Menu for desktop -->
+  <ul class="hidden menu sm:menu-horizontal gap-2">
+    <li>
+      <%= link_to "About", about_path %>
+    </li>
+    <li><a>Contact</a></li>
+    <a class="btn btn-sm btn-primary">Log in</a>
+  </ul>
+</nav>
