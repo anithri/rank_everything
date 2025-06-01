@@ -7,11 +7,8 @@
     Rank Everything
   </a>
   <nav class="breadcrumbs text-sm inline-block">
-    <ul>
-      <li><a>Home</a></li>
-      <li><a>Documents</a></li>
-      <li>Add Document</li>
-      <%= render_breadcrumbs builder: Breadcrumbs::TailwindBuilder %>
+    <ul class="pt-1">
+      <%= render_breadcrumbs tag: :li, separator: "" %>
     </ul>
   </nav>
   <%#= render_breadcrumbs %>
