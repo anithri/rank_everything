@@ -1,5 +1,4 @@
 require 'rails_helper'
-# thanks to https://railsguru.dev/lessons/rails-8-oauth-and-rspec-tests
 
 RSpec.describe User, type: :model do
   let(:existing_user) { build :user }
