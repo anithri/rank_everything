@@ -21,3 +21,24 @@ class User < ApplicationRecord
   normalizes :name, with: ->(n) { n.strip.downcase }
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 end
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  avatar_url      :string
+#  email_address   :string           not null
+#  name            :string           not null
+#  password_digest :string           not null
+#  visible         :boolean          default(FALSE)
+#  who_am_i        :text
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email_address  (email_address) UNIQUE
+#  index_users_on_name           (name) UNIQUE
+#  index_users_on_visible        (visible)
+#
