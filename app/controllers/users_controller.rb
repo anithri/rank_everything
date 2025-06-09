@@ -3,20 +3,28 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
+    add_breadcrumb "Users", users_path
     @users = User.all
   end
 
   # GET /users/1 or /users/1.json
   def show
+    add_breadcrumb "Users", users_path
+    add_breadcrumb @user.name, user_path(@user)
   end
 
   # GET /users/new
   def new
+    add_breadcrumb "Users", users_path
+    add_breadcrumb "New User", new_user_path
     @user = User.new
   end
 
   # GET /users/1/edit
   def edit
+    add_breadcrumb "Users", users_path
+    add_breadcrumb @user.name, user_path(@user)
+    add_breadcrumb "Edit", edit_user_path(@user)
   end
 
   # POST /users or /users.json
