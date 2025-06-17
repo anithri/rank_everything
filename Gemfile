@@ -76,4 +76,4 @@ gem "rails_icons", "~> 1.3"
 
 gem "breadcrumbs_on_rails", "~> 4.1"
 
-gem "chrome_devtools_rails", "~> 0.1.0"
+gem "pundit", "~> 2.5"
