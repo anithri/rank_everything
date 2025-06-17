@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full" S>
+<html class="h-full">
   <head>
     <title><%= content_for(:title) || "Rank Everything" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,9 +22,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="h-full" data-theme="coffee">
+  <body class="min-h-screen" data-theme="coffee">
     <%= render partial: "shared/navbar" %>
-    <main class="flex flex-col items-center gap-4 mx-4 mt-4" >
+    <main class="flex flex-col items-center gap-2 mx-4 mt-1" >
       <%= yield %>
     </main>
   </body>
