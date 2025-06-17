@@ -14,7 +14,7 @@ env_credentials: &env_credentials
 development:
   <<: *default
   <<: *env_credentials
-  database: every_list_ever_development
+  database: rank_everything_development
 
 test:
   <<: *default

@@ -5,6 +5,8 @@ class User < ApplicationRecord
   MIN_PASSWORD_LENGTH = 8
   has_secure_password
   has_many :sessions, dependent: :destroy
+  has_one :site_role, dependent: :destroy
+  delegate :role, :admin?, :general?, to: :site_role
 
   validates :name,
             presence: true,
@@ -20,6 +22,9 @@ class User < ApplicationRecord
 
   normalizes :name, with: ->(n) { n.strip.downcase }
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  default_scope -> { order(:name).includes(:site_role) }
+  scope :visible, -> { where(visible: true) }
 end
 
 # == Schema Information
