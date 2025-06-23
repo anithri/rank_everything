@@ -3,18 +3,21 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
+    authorize Current.user
     add_breadcrumb "Users", users_path
-    @users = User.all
+    @users = policy_scope(User)
   end
 
   # GET /users/1 or /users/1.json
   def show
+    authorize @user
     add_breadcrumb "Users", users_path
     add_breadcrumb @user.name, user_path(@user)
   end
 
   # GET /users/new
   def new
+    authorize @user
     add_breadcrumb "Users", users_path
     add_breadcrumb "New User", new_user_path
     @user = User.new
@@ -22,6 +25,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    authorize @user
+
     add_breadcrumb "Users", users_path
     add_breadcrumb @user.name, user_path(@user)
     add_breadcrumb "Edit", edit_user_path(@user)
@@ -30,6 +35,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+    authorize @user
 
     respond_to do |format|
       if @user.save
@@ -44,6 +50,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    authorize @user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: "User was successfully updated." }
@@ -57,6 +64,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    authorize @user
     @user.destroy!
 
     respond_to do |format|

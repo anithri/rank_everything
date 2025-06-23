@@ -1,3 +1,20 @@
 <div id="<%= dom_id user %>" class="w-full">
+  <% if Current.user.admin? %>
+    <%- if user.visible %>
+    <span class="badge badge-success badge-sm badge-soft ml-2">
+      <%= heroicon(:eye) %>
+    </span>
+    <% else %>
+    <span class="badge badge-soft badge-warning badge-sm ml-2">
+      <%= heroicon("eye-slash") %>
+    </span>
+    <% end %>
+  <% end %>
   <%= user.name %>
+
+  <%- if user&.admin? %>
+    <span class="badge badge-error ph-2 ml-2">
+      <%= user.site_role.titleize %>
+    </span>
+  <% end %>
 </div>
