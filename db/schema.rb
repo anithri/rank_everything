@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_17_171730) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_23_202627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,14 +23,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_171730) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "site_roles", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "role", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_site_roles_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email_address", null: false
@@ -40,11 +32,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_171730) do
     t.string "avatar_url"
     t.boolean "visible", default: false
     t.text "who_am_i"
+    t.integer "site_role", default: 0
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["visible"], name: "index_users_on_visible"
   end
 
   add_foreign_key "sessions", "users"
-  add_foreign_key "site_roles", "users"
 end

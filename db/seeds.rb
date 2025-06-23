@@ -5,7 +5,7 @@ admin = User.find_by(name: 'admin') || User.create(
   password: 'admin_pass',
   password_confirmation: 'admin_pass',
   visible: false,
-  site_role: SiteRole.create(role: 'admin')
+  site_role: :admin
 )
 
 anithri = User.find_by(name: 'anithri') || User.create(
@@ -14,7 +14,8 @@ anithri = User.find_by(name: 'anithri') || User.create(
   password: 'password',
   password_confirmation: 'password',
   visible: false,
-  site_role: SiteRole.create,
+  site_role: :general,
+  avatar_url: "https://gravatar.com/avatar/45c541f7e93f3cb55c229495a9fbabba?s=400&d=robohash&r=x"
 )
 
 10.times do |n|
@@ -28,6 +29,6 @@ anithri = User.find_by(name: 'anithri') || User.create(
     password: 'password',
     password_confirmation: 'password',
     visible: rand(4).zero?,
-    site_role: SiteRole.create,
+    site_role: :general,
   )
 end

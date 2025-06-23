@@ -79,6 +79,7 @@ end
 #  email_address   :string           not null
 #  name            :string           not null
 #  password_digest :string           not null
+#  site_role       :integer          default("general")
 #  visible         :boolean          default(FALSE)
 #  who_am_i        :text
 #  created_at      :datetime         not null

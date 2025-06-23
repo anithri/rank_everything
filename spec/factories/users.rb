@@ -1,8 +1,11 @@
 FactoryBot.define do
-  factory :user do
-    name { |n| "User \##{n}" }
-    email_address { |n| "user#{n}@example.net" }
+  factory :user, class: User do
+    sequence(:name) { |n| "User \##{n}" }
+    sequence(:email_address) { |n| "user#{n}@example.net" }
     password_digest { BCrypt::Password.create("password") }
+    avatar_url { nil }
+    site_role { :general }
+    visible { true }
 
     factory :bruce do
       name { "Bruce Wayne" }
@@ -15,9 +18,17 @@ FactoryBot.define do
     end
 
     factory :thomas do
-      name { "Thomas Wayne"}
-      email_address {"twayne@gothamgeneral.com"}
+      name { "Thomas Wayne" }
+      visible { false }
+      email_address { "twayne@gothamgeneral.com" }
       password_digest { BCrypt::Password.create("badpassword") }
+    end
+
+    factory :admin do
+      name { "AdminUser" }
+      email_address { "admin@rank-everything.example.com" }
+      site_role { :admin }
+      visible { false }
     end
   end
 
@@ -32,6 +43,7 @@ end
 #  email_address   :string           not null
 #  name            :string           not null
 #  password_digest :string           not null
+#  site_role       :integer          default("general")
 #  visible         :boolean          default(FALSE)
 #  who_am_i        :text
 #  created_at      :datetime         not null
