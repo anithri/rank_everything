@@ -9,7 +9,7 @@
 
   <h1 class="font-bold text-4xl">Sign in</h1>
 
-  <%= form_with url: session_url, class: "contents" do |form| %>
+  <%= form_with url: session_url, class: "contents", target: '_top', data: { turbo_frame: '_top' } do |form| %>
     <div class="my-5">
       <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username",
                            placeholder: "Enter your email address", value: params[:email_address],
@@ -26,7 +26,6 @@
       <div class="inline">
         <%= form.submit "Sign in", class: "btn btn-primary" %>
       </div>
-
       <div class="mt-4 text-sm text-gray-500 sm:mt-0">
         <%= link_to "Forgot password?", new_password_path, class: "btn btn-secondary" %>
       </div>
