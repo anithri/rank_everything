@@ -16,6 +16,7 @@
   <ul class="menu lg:menu-horizontal bg-base-200 rounded-box">
     <li><%= link_to "About", about_path %></li>
     <li><%= link_to "Users", users_path %></li>
+    <li><%= link_to "Teams", teams_path %></li>
     <% if Current.user %>
       <li><%= link_to "Logout", session_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: '_top' } %></li>
       <li><%= link_to Current.user.name, user_path(Current.user) %></li>

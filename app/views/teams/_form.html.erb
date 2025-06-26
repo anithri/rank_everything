@@ -1,0 +1,41 @@
+<%= form_with(model: team, class: "contents") do |form| %>
+  <% if team.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% team.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if team.new_record? %>
+    <%= form.hidden_field :owner_id, value: Current.user.id %>
+  <% end %>
+
+  <div class="flex flex-col gap-y-4">
+
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">Team Name</legend>
+      <%= form.text_field :name, class: "input" %>
+    </fieldset>
+
+
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">Description</legend>
+      <%= form.textarea :description, class: "textarea" %>
+    </fieldset>
+
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">Visible?</legend>
+      <%= form.checkbox :visible, class: "checkbox" %>
+    </fieldset>
+
+    <div class="inline">
+      <%= form.submit class: "btn btn-primary" %>
+      <%= link_to "Back to teams", teams_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+<% end %>
