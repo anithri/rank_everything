@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'faker'
+
+require "faker"
 
 module RandomEnv
     TOKEN_CHARS = [ 2, 3, 4, 6, 7, 9, ("a".."z").to_a, ("A".."Z").to_a ].flatten.freeze
@@ -20,11 +21,10 @@ module RandomEnv
         Faker::Movies::StarWars.character,
         Faker::TvShows::DrWho.character,
         Faker::TvShows::StarTrek.character
-      ].sample.gsub(/\s+/,"")
+      ].sample.gsub(/\s+/, "")
     end
 
     def self.secret_key_base
       `rails secret`.strip
     end
-  end
-
+end

@@ -18,7 +18,7 @@ class User < ApplicationRecord
             presence: true,
             format: { with: URI::MailTo::EMAIL_REGEXP },
             uniqueness: { case_sensitive: false }
-  validates :password, on: [:registration, :password_change],
+  validates :password, on: [ :registration, :password_change ],
             presence: true,
             length: { minimum: MIN_PASSWORD_LENGTH, maximum: MAX_PASSWORD_LENGTH }
   # validates :avatar_url, ## need URI validator

@@ -31,7 +31,6 @@ FactoryBot.define do
       visible { false }
     end
   end
-
 end
 
 # == Schema Information
