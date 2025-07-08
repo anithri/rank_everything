@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Team, type: :model do
   let(:user) { create(:user) }
+  let(:min) { Team::MIN_NAME_LENGTH }
+  let(:max) { Team::MAX_NAME_LENGTH }
 
   describe "associations" do
     it { should belong_to(:owner).class_name("User") }
@@ -10,8 +12,7 @@ RSpec.describe Team, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:owner) }
-    it { is_expected.to validate_length_of(:name).is_at_least(Team::MIN_NAME_LENGTH).is_at_most(Team::MAX_NAME_LENGTH)
-    }
+    it { is_expected.to validate_length_of(:name).is_at_least(min).is_at_most(max) }
   end
 
 end

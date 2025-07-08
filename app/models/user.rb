@@ -9,15 +9,16 @@ class User < ApplicationRecord
   enum :site_role, { general: 0, admin: 42 }
 
   has_many :sessions, dependent: :destroy
+  has_many :teams, foreign_key: :owner_id
 
   validates :name,
             presence: true,
             length: { minimum: MIN_NAME_LENGTH, maximum: MAX_NAME_LENGTH },
-            uniqueness: { case_sensitive: false }
+            uniqueness: { case_sensitive: true }
   validates :email_address,
             presence: true,
             format: { with: URI::MailTo::EMAIL_REGEXP },
-            uniqueness: { case_sensitive: false }
+            uniqueness: { case_sensitive: true }
   validates :password, on: [ :registration, :password_change ],
             presence: true,
             length: { minimum: MIN_PASSWORD_LENGTH, maximum: MAX_PASSWORD_LENGTH }
