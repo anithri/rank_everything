@@ -1,18 +1,17 @@
-<div id="<%= dom_id team %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <strong class="block font-medium mb-1">Name:</strong>
+<div id="<%= dom_id team %>" class="w-full sm:w-auto space-x-5 ">
+  <%- if team.visible %>
+    <span class="badge badge-success badge-sm badge-soft ml-2">
+      <%= heroicon(:eye) %>
+    </span>
+  <% else %>
+    <span class="badge badge-soft badge-warning badge-sm ml-2">
+      <%= heroicon("eye-slash") %>
+    </span>
+  <% end %>
+  <span>
     <%= team.name %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= team.description %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Visible:</strong>
-    <%= team.visible? ? "Yes" : "No" %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Owner:</strong>
-    <%= team.owner_id %>
-  </div>
+  </span>
+  <% if team.owner.visible? %>
+    <span><%= team.owner.name %></span>
+  <% end %>
 </div>

@@ -3,7 +3,7 @@ FactoryBot.define do
     name { "MyString" }
     description { "MyText" }
     visible { false }
-    owner { nil }
+    owner { association :user }
   end
 end
 

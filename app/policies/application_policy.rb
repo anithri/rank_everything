@@ -10,9 +10,10 @@ class ApplicationPolicy
 
   delegate :admin?, to: :user
 
-  def index?
-    false
-  end
+  # disabling in favor of scope
+  # def index?
+  #   false
+  # end
 
   def show?
     false

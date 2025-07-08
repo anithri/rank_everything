@@ -35,9 +35,12 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+require_relative './support/session_test_helper'
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.include FactoryBot::Syntax::Methods
+  config.include SessionTestHelper
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]

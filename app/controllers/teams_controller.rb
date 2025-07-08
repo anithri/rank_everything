@@ -3,25 +3,37 @@ class TeamsController < ApplicationController
 
   # GET /teams or /teams.json
   def index
-    @teams = Team.all
+    authorize Current.user
+    add_breadcrumb "Teams", teams_path
+    @teams = policy_scope(Team)
   end
 
   # GET /teams/1 or /teams/1.json
   def show
+    authorize Current.user
+    add_breadcrumb "Team", team_path(@team)
   end
 
   # GET /teams/new
   def new
     @team = Team.new
+    authorize @team
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb "New Team", new_team_path
   end
 
   # GET /teams/1/edit
   def edit
+    authorize @team
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb Current.user.name, edit_team_path(@team)
+    add_breadcrumb "Edit", edit_team_path(@team)
   end
 
   # POST /teams or /teams.json
   def create
     @team = Team.new(team_params)
+    authorize @team
 
     respond_to do |format|
       if @team.save
@@ -36,6 +48,7 @@ class TeamsController < ApplicationController
 
   # PATCH/PUT /teams/1 or /teams/1.json
   def update
+    authorize @team
     respond_to do |format|
       if @team.update(team_params)
         format.html { redirect_to @team, notice: "Team was successfully updated." }
@@ -49,6 +62,7 @@ class TeamsController < ApplicationController
 
   # DELETE /teams/1 or /teams/1.json
   def destroy
+    authorize @team
     @team.destroy!
 
     respond_to do |format|

@@ -2,6 +2,8 @@ class Team < ApplicationRecord
   MIN_NAME_LENGTH = 8
   MAX_NAME_LENGTH = 64
   belongs_to :owner, class_name: "User"
+
+  scope :visible, -> { where(visible: true) }
 end
 
 # == Schema Information

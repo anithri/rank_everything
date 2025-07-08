@@ -5,14 +5,8 @@ class UserPolicy < ApplicationPolicy
   # code, beware of possible changes to the ancestors:
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
-  def index?
-    true
-  end
-
   def show?
-    return true if admin?
-    return true if owner?
-    record.visible?
+    admin? || owner? || record.visible?
   end
 
   def create?
@@ -41,9 +35,9 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      return scope.all if user&.admin?
+      return scope.all.order(:name) if user&.admin?
 
-      scope.where(id: user&.id).or(User.visible)
+      scope.where(id: user&.id).or(User.visible).order(:name)
     end
   end
 end

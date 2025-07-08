@@ -36,25 +36,22 @@ RSpec.describe UserPolicy, type: :policy do
     let(:current_user) { bruce }
     context "for owner" do
       let(:user) { bruce }
-      it { is_expected.to permit_actions(%i[index show edit update]) }
-      it { is_expected.to forbid_actions(%i[create new destroy]) }
+      it { is_expected.to permit_only_actions(%i[show edit update]) }
     end
 
     context "for visible user" do
       let(:user) { babs }
-      it { is_expected.to permit_actions(%i[show index]) }
-      it { is_expected.to forbid_actions(%i[create new update edit destroy]) }
+      it { is_expected.to permit_only_actions(%i[show]) }
     end
+
     context "for invisible user" do
       let(:user) { thomas }
-      it { is_expected.to permit_actions(%i[index]) }
-      it { is_expected.to forbid_actions(%i[show edit update create edit destroy]) }
+      it { is_expected.to forbid_all_actions }
     end
 
     context "for admin user" do
       let(:user) { admin }
-      it { is_expected.to permit_actions(%i[index]) }
-      it { is_expected.to forbid_actions(%i[show edit update create edit destroy]) }
+      it { is_expected.to forbid_all_actions }
     end
   end
 
