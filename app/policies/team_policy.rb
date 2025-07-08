@@ -1,9 +1,29 @@
 class TeamPolicy < UserPolicy
-  # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
-  # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
-  # In most cases the behavior will be identical, but if updating existing
-  # code, beware of possible changes to the ancestors:
-  # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
+
+  #region # Actions
+
+  # TODO deep changes needed when team roles is implemented
+  def show?
+    return false if guest?
+    return true if record.visible?
+
+    admin? || owner?
+  end
+
+  # until it's decided if one user can own multiple teams
+  def create?
+    user?
+  end
+
+  private
+
+  #endregion
+
+  #region # Predicates
+  private def owner?
+    record.owner == user
+  end
+  #endregion
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -12,29 +32,5 @@ class TeamPolicy < UserPolicy
 
       scope.where(owner: user).or(Team.visible).order(:name)
     end
-  end
-
-  # TODO deep changes needed when team roles is implemented
-
-  def show?
-    admin? || owner? || record.visible?
-  end
-  
-  # until it's decided if one user can own multiple teams
-  def create?
-    user?
-  end
-
-  def destroy?
-    admin? || owner?
-  end
-
-  private
-
-  def user?
-    !!user
-  end
-  def owner?
-    record.owner == user
   end
 end

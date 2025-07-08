@@ -20,9 +20,6 @@
             <% if TeamPolicy.new(Current.user, team).edit? %>
               <%= link_to "Edit", edit_team_path(team), class: "px-3.5 btn btn-warning btn-sm" %>
             <% end %>
-            <% if TeamPolicy.new(Current.user, team).destroy? %>
-              <%= button_to "Destroy", team, method: :delete, class: "px-3.5 btn btn-error btn-sm", data: { turbo_confirm: "Are you sure?" } %>
-            <% end %>
           </div>
         </div>
       <% end %>

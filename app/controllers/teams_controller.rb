@@ -1,16 +1,17 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: %i[ show edit update destroy ]
+  before_action :set_team, only: %i[ show edit update ]
 
   # GET /teams or /teams.json
   def index
-    authorize Current.user
-    add_breadcrumb "Teams", teams_path
     @teams = policy_scope(Team)
+
+    add_breadcrumb "Teams", teams_path
   end
 
   # GET /teams/1 or /teams/1.json
   def show
     authorize Current.user
+
     add_breadcrumb "Team", team_path(@team)
   end
 
@@ -18,6 +19,7 @@ class TeamsController < ApplicationController
   def new
     @team = Team.new
     authorize @team
+
     add_breadcrumb "Teams", teams_path
     add_breadcrumb "New Team", new_team_path
   end
@@ -25,6 +27,7 @@ class TeamsController < ApplicationController
   # GET /teams/1/edit
   def edit
     authorize @team
+
     add_breadcrumb "Teams", teams_path
     add_breadcrumb Current.user.name, edit_team_path(@team)
     add_breadcrumb "Edit", edit_team_path(@team)
@@ -49,6 +52,7 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1 or /teams/1.json
   def update
     authorize @team
+
     respond_to do |format|
       if @team.update(team_params)
         format.html { redirect_to @team, notice: "Team was successfully updated." }
@@ -60,25 +64,15 @@ class TeamsController < ApplicationController
     end
   end
 
-  # DELETE /teams/1 or /teams/1.json
-  def destroy
-    authorize @team
-    @team.destroy!
+  private
 
-    respond_to do |format|
-      format.html { redirect_to teams_path, status: :see_other, notice: "Team was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_team
+    @team = Team.find(params.expect(:id))
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_team
-      @team = Team.find(params.expect(:id))
-    end
-
-    # Only allow a list of trusted parameters through.
-    def team_params
-      params.expect(team: [ :name, :description, :visible, :owner_id ])
-    end
+  # Only allow a list of trusted parameters through.
+  def team_params
+    params.expect(team: [:name, :description, :visible, :owner_id])
+  end
 end

@@ -8,13 +8,7 @@ class ApplicationPolicy
     @record = record
   end
 
-  delegate :admin?, to: :user
-
-  # disabling in favor of scope
-  # def index?
-  #   false
-  # end
-
+  #region # Actions
   def show?
     false
   end
@@ -35,26 +29,33 @@ class ApplicationPolicy
     update?
   end
 
-  def destroy?
-    false
+  #endregion
+
+  #region # Predicates
+  delegate :admin?, to: :user, private: true
+
+  private def user?
+    !!user
   end
 
   private def admin?
     user&.admin?
   end
 
-  private def general?
-    user&.general?
-  end
-
   private def guest?
     user.nil?
   end
 
-  # when teams are entered play this becomes more complicated
   private def owner?
-    record.user == user
+    raise NoMethodError, "You must define #resolve in #{self.class}"
   end
+
+  # TODO Integrate with a role engine after understanding better
+  # plan is to allow a few roles for the team like publisher, editor, contributor, subscriber
+  # private def has_role?(role)
+  #   raise NoMethodError, "You must define #has_role? in #{self.class}"
+  # end
+  #endregion
 
   class Scope
     def initialize(user, scope)

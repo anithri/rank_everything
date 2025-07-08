@@ -1,11 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update ]
 
   # GET /users or /users.json
   def index
-    authorize Current.user
-    add_breadcrumb "Users", users_path
     @users = policy_scope(User)
+    add_breadcrumb "Users", users_path
   end
 
   # GET /users/1 or /users/1.json
@@ -63,15 +62,6 @@ class UsersController < ApplicationController
   end
 
   # DELETE /users/1 or /users/1.json
-  def destroy
-    authorize @user
-    @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, status: :see_other, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

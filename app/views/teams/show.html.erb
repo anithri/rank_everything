@@ -13,7 +13,4 @@
     <%= link_to "Edit this team", edit_team_path(@team), class: "btn btn-primary" %>
   <% end %>
   <%= link_to "Back to teams", teams_path, class: "btn btn-info" %>
-  <% if TeamPolicy.new(Current.user, @team).destroy? %>
-    <%= button_to "Destroy this team", @team, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "btn btn-danger", data: { turbo_confirm: "Are you sure?" } %>
-  <% end %>
 </div>

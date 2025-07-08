@@ -23,6 +23,6 @@ end
 #  index_teams_on_owner_id  (owner_id)
 #
 # Foreign Keys
-#
+
 #  fk_rails_...  (owner_id => users.id)
 #

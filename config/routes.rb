@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :teams
-  resources :users
+  resources :teams, except: [:destroy]
+  resources :users, except: [:destroy]
   resource :registration, only: [ :new, :create ]
-  resource :session
+  resource :session, only: [ :new, :create, :destroy ]
   resources :passwords, param: :token
+
   get "/home", to: "pages#home"
   get "/about", to: "pages#about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
