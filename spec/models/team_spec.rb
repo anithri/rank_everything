@@ -15,6 +15,27 @@ RSpec.describe Team, type: :model do
     it { is_expected.to validate_length_of(:name).is_at_least(min).is_at_most(max) }
   end
 
+  describe "scopes" do
+    let(:base) { create(:team) }
+    let(:visible) { create(:team) }
+    let(:invisible) { create(:invisible_team) }
+
+    describe "default scope" do
+      let(:teams) {[base, visible, invisible]}
+      it "returns teams in name order" do
+        expect(Team.all).to eq(teams)
+      end
+    end
+    describe "visible scope" do
+      let(:teams) {[base, visible, invisible]}
+      it "returns teams in name order" do
+        expect(Team.visible).to eq(teams.first(2))
+      end
+    end
+
+    it {  }
+  end
+
 end
 
 # == Schema Information

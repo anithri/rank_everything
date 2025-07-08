@@ -1,9 +1,13 @@
 FactoryBot.define do
   factory :team do
-    name { "MyString" }
+    sequence(:name) { |n| "Title %04d" % n }
     description { "MyText" }
-    visible { false }
+    visible { true }
     owner { association :user }
+
+    factory :invisible_team do
+      visible { false }
+    end
   end
 end
 
