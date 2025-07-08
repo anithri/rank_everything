@@ -44,6 +44,7 @@ gem "thruster", require: false
 
 group :test do
   gem "pundit-matchers", "~> 4.0.0"
+  gem "shoulda-matchers", "~> 6.0"
 end
 
 group :development do

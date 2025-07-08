@@ -1,7 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Team, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { create(:user) }
+
+  describe "associations" do
+    it { should belong_to(:owner).class_name("User") }
+  end
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:owner) }
+    it { is_expected.to validate_length_of(:name).is_at_least(Team::MIN_NAME_LENGTH).is_at_most(Team::MAX_NAME_LENGTH)
+    }
+  end
+
 end
 
 # == Schema Information

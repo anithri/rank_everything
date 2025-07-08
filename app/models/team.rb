@@ -3,6 +3,13 @@ class Team < ApplicationRecord
   MAX_NAME_LENGTH = 64
   belongs_to :owner, class_name: "User"
 
+  validates :name,
+            presence: true,
+            length: { minimum: MIN_NAME_LENGTH, maximum: MAX_NAME_LENGTH },
+            uniqueness: { case_sensitive: false }
+  validates :owner, presence: true
+
+  default_scope -> { order(:name) }
   scope :visible, -> { where(visible: true) }
 end
 
