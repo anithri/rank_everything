@@ -33,9 +33,9 @@ RSpec.describe User, type: :model do
     end
 
     describe 'visible scope' do
-      let(:users) { [base, visible] }
+      let(:users) { [base, visible, invisible] }
       it "should return only visible users" do
-        expect(User.unscoped.visible).to eq(users)
+        expect(User.unscoped.visible).to eq(users.first(2))
       end
     end
   end

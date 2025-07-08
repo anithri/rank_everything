@@ -32,8 +32,6 @@ RSpec.describe Team, type: :model do
         expect(Team.visible).to eq(teams.first(2))
       end
     end
-
-    it {  }
   end
 
 end
