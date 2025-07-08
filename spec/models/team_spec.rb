@@ -33,7 +33,6 @@ RSpec.describe Team, type: :model do
       end
     end
   end
-
 end
 
 # == Schema Information
