@@ -27,9 +27,11 @@ RSpec.describe MembershipPolicy, type: :policy do
   end
   describe "voter" do
     # can show
+    # can always vote
   end
 
   describe "guest" do
     # can show
+    # can vote on open lists
   end
 end

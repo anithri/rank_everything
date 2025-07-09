@@ -33,16 +33,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_005046) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "team_members", force: :cascade do |t|
-    t.bigint "team_id", null: false
-    t.bigint "user_id", null: false
-    t.integer "role", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_team_members_on_team_id"
-    t.index ["user_id"], name: "index_team_members_on_user_id"
-  end
-
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -71,7 +61,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_005046) do
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "users"
   add_foreign_key "sessions", "users"
-  add_foreign_key "team_members", "teams"
-  add_foreign_key "team_members", "users"
   add_foreign_key "teams", "users", column: "owner_id"
 end
