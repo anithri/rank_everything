@@ -6,7 +6,18 @@ RSpec.describe Team, type: :model do
   let(:max) { Team::MAX_NAME_LENGTH }
 
   describe "associations" do
-    it { should belong_to(:owner).class_name("User") }
+    it { is_expected.to belong_to(:owner).class_name("User") }
+    it { is_expected.to have_many(:memberships).dependent(:destroy) }
+    it { is_expected.to have_many(:members).through(:memberships).source(:user) }
+    it { is_expected.to have_many(:voter_memberships).class_name("Membership") }
+    it { is_expected.to have_many(:voters).through(:voter_memberships).source(:user).class_name("User") }
+    it { is_expected.to have_many(:contributor_memberships).class_name("Membership") }
+    it { is_expected.to have_many(:contributors).through(:contributor_memberships).source(:user).class_name("User") }
+    it { is_expected.to have_many(:editor_memberships).class_name("Membership") }
+    it { is_expected.to have_many(:editors).through(:editor_memberships).source(:user).class_name("User") }
+    it { is_expected.to have_many(:manager_memberships).class_name("Membership") }
+    it { is_expected.to have_many(:managers).through(:manager_memberships).source(:user).class_name("User") }
+
   end
 
   describe "validations" do

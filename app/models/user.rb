@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :sessions, dependent: :destroy
   has_many :teams, foreign_key: :owner_id
+  has_many :memberships
 
   validates :name,
             presence: true,
