@@ -21,6 +21,7 @@ anithri = User.find_by(name: 'anithri') || User.create(
 users = Array.new(20) do
   # try to keep email and name unique
   email = Faker::Internet.email
+
   next if User.find_by(email_address: email)
   name = Faker::Name.name
   User.find_by(name: name) || User.create(

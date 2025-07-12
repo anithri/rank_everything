@@ -1,10 +1,17 @@
 class PasswordsController < ApplicationController
   allow_unauthenticated_access
-  before_action :set_user_by_token, only: %i[ edit update ]
 
+  before_action :set_user_by_token, only: %i[ edit update ]
+  skip_after_action :verify_pundit_authorization
+
+  # GET /passwords/new
+  # provides the password reset form
   def new
+
   end
 
+  # GET POST /passwords
+  # submit the password reset form
   def create
     if user = User.find_by(email_address: params[:email_address])
       PasswordsMailer.reset(user).deliver_later
@@ -13,11 +20,17 @@ class PasswordsController < ApplicationController
     redirect_to new_session_path, notice: "Password reset instructions sent (if user with that email address exists)."
   end
 
+
+  # GET /passwords/:token/edit
+  # provides change password form
   def edit
   end
 
+  # PUT /passwords/:token
+  # submit the change password form
   def update
-    if @user.update(params.permit(:password, :password_confirmation))
+    @user.assign_attributes(params.permit(:password, :password_confirmation))
+    if @user.save(context: :password_changed)
       redirect_to new_session_path, notice: "Password has been reset."
     else
       redirect_to edit_password_path(params[:token]), alert: "Passwords did not match."
