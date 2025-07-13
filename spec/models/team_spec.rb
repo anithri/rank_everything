@@ -17,7 +17,6 @@ RSpec.describe Team, type: :model do
     it { is_expected.to have_many(:editors).through(:editor_memberships).source(:user).class_name("User") }
     it { is_expected.to have_many(:manager_memberships).class_name("Membership") }
     it { is_expected.to have_many(:managers).through(:manager_memberships).source(:user).class_name("User") }
-
   end
 
   describe "validations" do
@@ -32,13 +31,13 @@ RSpec.describe Team, type: :model do
     let(:invisible) { create(:invisible_team) }
 
     describe "default scope" do
-      let(:teams) {[base, visible, invisible]}
+      let(:teams) { [ base, visible, invisible ] }
       it "returns teams in name order" do
         expect(Team.all).to eq(teams)
       end
     end
     describe "visible scope" do
-      let(:teams) {[base, visible, invisible]}
+      let(:teams) { [ base, visible, invisible ] }
       it "returns teams in name order" do
         expect(Team.visible).to eq(teams.first(2))
       end

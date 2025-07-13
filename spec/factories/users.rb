@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user, class: User do
     sequence(:name) { |n| "User \#%04d" % n }
-    sequence(:email_address) { |n| "user%04d@example.net" % n}
+    sequence(:email_address) { |n| "user%04d@example.net" % n }
     password_digest { BCrypt::Password.create("password") }
     avatar_url { nil }
     site_role { :general }

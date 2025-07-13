@@ -4,12 +4,11 @@ RSpec.describe MembershipPolicy, type: :policy do
   subject { described_class }
 
   describe "admin" do
-    #Can do everything
-
+    # Can do everything
   end
 
   describe "team_owner" do
-    #can do everything
+    # can do everything
   end
 
   describe "manager" do
@@ -23,7 +22,7 @@ RSpec.describe MembershipPolicy, type: :policy do
     # can show
     # can managage "voters"
     # can gst
-    # 
+    #
   end
   describe "voter" do
     # can show

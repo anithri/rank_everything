@@ -72,10 +72,10 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user).require([:name, :email_address, :visible, :who_am_i, :avatar_url])
+    params.fetch(:user).require([ :name, :email_address, :visible, :who_am_i, :avatar_url ])
   end
 
   def new_user_params
-    params.fetch(:user).require([:name, :email_address, :visible, :who_am_i, :avatar_url, :password, :password_confirmation])
+    params.fetch(:user).require([ :name, :email_address, :visible, :who_am_i, :avatar_url, :password, :password_confirmation ])
   end
 end

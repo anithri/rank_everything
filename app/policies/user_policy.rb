@@ -1,6 +1,6 @@
 class UserPolicy < ApplicationPolicy
   # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
-  #region Actions
+  # region Actions
   def show?
     admin? || owner? || record.visible?
   end
@@ -13,13 +13,13 @@ class UserPolicy < ApplicationPolicy
     owner? || admin?
   end
 
-  #endregion
+  # endregion
 
-  #region Predicates
+  # region Predicates
   private def owner?
     record == user
   end
-  #endregion
+  # endregion
 
   class Scope < ApplicationPolicy::Scope
     def resolve

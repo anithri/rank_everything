@@ -1,6 +1,5 @@
 class TeamPolicy < UserPolicy
-
-  #region # Actions
+  # region # Actions
 
   # TODO deep changes needed when team roles is implemented
   def show?
@@ -17,13 +16,13 @@ class TeamPolicy < UserPolicy
 
   private
 
-  #endregion
+  # endregion
 
-  #region # Predicates
+  # region # Predicates
   private def owner?
     record.owner == user
   end
-  #endregion
+  # endregion
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!

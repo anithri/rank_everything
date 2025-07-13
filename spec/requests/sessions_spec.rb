@@ -42,4 +42,3 @@ RSpec.describe "Sessions", type: :request do
     end
   end
 end# frozen_string_literal: true
-

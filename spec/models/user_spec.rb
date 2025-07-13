@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:name).is_at_least(min_name).is_at_most(max_name) }
     it { is_expected.to validate_length_of(:password).is_at_least(min_pass)
                                                      .is_at_most(max_pass)
-                                                     .on([:registration, :password_change]) }
+                                                     .on([ :registration, :password_change ]) }
     it { is_expected.to validate_uniqueness_of(:name).ignoring_case_sensitivity }
     it { is_expected.to validate_uniqueness_of(:email_address).ignoring_case_sensitivity }
   end
@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
     let(:visible) { create(:user, visible: true) }
     let(:invisible) { create(:user, visible: false) }
     describe 'default scope' do
-      let(:users) { [base, visible, invisible] }
+      let(:users) { [ base, visible, invisible ] }
       it "return users with names in ascending order" do
         expect(User.all).to eq(users)
       end
@@ -51,7 +51,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to normalize(:email_address).from("User@EXAMPLE.COM").to("user@example.com") }
     it { is_expected.to have_secure_password }
   end
-
 end
 # == Schema Information
 #

@@ -1,18 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Membership, type: :model do
-
   describe "associations" do
-    it {is_expected.to belong_to(:user)}
-    it {is_expected.to belong_to(:team)}
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:team) }
   end
 
   describe "validations" do
-    it {is_expected.to validate_presence_of(:role)}
+    it { is_expected.to validate_presence_of(:role) }
   end
 
   describe "macros" do
-    it {is_expected.to define_enum_for(:role).with_values(voter: 0, contributor: 10, editor: 20, manager: 30)}
+    it { is_expected.to define_enum_for(:role).with_values(voter: 0, contributor: 10, editor: 20, manager: 30) }
   end
 end
 

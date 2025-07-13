@@ -5,13 +5,13 @@ FactoryBot.define do
     role { "visitor" }
   end
   factory :contributor_membership do
-    role { "contributor"}
+    role { "contributor" }
   end
   factory :editor_membership do
-    role { "editor"}
+    role { "editor" }
   end
   factory :manager_membership do
-    role { "manager"}
+    role { "manager" }
   end
 end
 

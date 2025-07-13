@@ -40,7 +40,7 @@ membership_roles = [
   *Array.new(10) { :voter },
   *Array.new(5) { :contributor },
   *Array.new(3) { :editor },
-  *Array.new(1) { :manager },
+  *Array.new(1) { :manager }
 ]
 
 name = "WarRocket Ajax"

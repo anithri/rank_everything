@@ -7,7 +7,6 @@ class PasswordsController < ApplicationController
   # GET /passwords/new
   # provides the password reset form
   def new
-
   end
 
   # GET POST /passwords

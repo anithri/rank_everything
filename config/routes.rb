@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  resources :teams, except: [:destroy] do
+  resources :teams, except: [ :destroy ] do
     resources :memberships, shallow: true
   end
-  resources :users, except: [:destroy]
+  resources :users, except: [ :destroy ]
   resource :registration, only: [ :new, :create ]
   resource :session, only: [ :new, :create, :destroy ]
   resources :passwords, param: :token

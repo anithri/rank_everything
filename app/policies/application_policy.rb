@@ -8,7 +8,7 @@ class ApplicationPolicy
     @record = record
   end
 
-  #region # Actions
+  # region # Actions
   def show?
     false
   end
@@ -29,9 +29,9 @@ class ApplicationPolicy
     update?
   end
 
-  #endregion
+  # endregion
 
-  #region # Predicates
+  # region # Predicates
   delegate :admin?, to: :user, private: true
 
   private def user?
@@ -55,7 +55,7 @@ class ApplicationPolicy
   # private def has_role?(role)
   #   raise NoMethodError, "You must define #has_role? in #{self.class}"
   # end
-  #endregion
+  # endregion
 
   class Scope
     def initialize(user, scope)

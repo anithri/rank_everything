@@ -24,7 +24,7 @@ RSpec.describe "Users", type: :request do
     end
 
     it "creates a new user" do
-      params = { name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password, }
+      params = { name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password }
       patch new_user_path, params: params
     end
   end
