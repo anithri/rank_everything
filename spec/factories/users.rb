@@ -31,6 +31,17 @@ FactoryBot.define do
       visible { false }
     end
   end
+
+  factory :registration, class: User do
+    sequence(:name) { |n| "Jason Todd \#%04d" % n }
+    sequence(:email_address) { |n| "red_hood_v%04d@example.net" % n }
+    password { "password" }
+    password_confirmation { "password" }
+
+    factory :invalid_registration do
+      password { "short" }
+    end
+  end
 end
 
 # == Schema Information
