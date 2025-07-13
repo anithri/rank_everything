@@ -37,7 +37,7 @@ module Authentication
 
   def after_authentication_url
     # session.delete(:return_to_after_authenticating) || root_url
-    root_path
+    root_path # TODO change to the main user dashboard when ready
   end
 
   def start_new_session_for(user)
