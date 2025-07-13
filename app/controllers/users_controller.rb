@@ -16,10 +16,10 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    @user = User.new
     authorize @user
     add_breadcrumb "Users", users_path
     add_breadcrumb "New User", new_user_path
-    @user = User.new
   end
 
   # GET /users/1/edit
@@ -33,11 +33,11 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
+    @user = User.new(new_user_params)
     authorize @user
 
     respond_to do |format|
-      if @user.save
+      if @user.save(context: :registration)
         format.html { redirect_to @user, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
@@ -64,13 +64,18 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.fetch(:user, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.fetch(:user).require([:name, :email_address, :visible, :who_am_i, :avatar_url])
+  end
+
+  def new_user_params
+    params.fetch(:user).require([:name, :email_address, :visible, :who_am_i, :avatar_url, :password, :password_confirmation])
+  end
 end

@@ -21,25 +21,34 @@
         </div>
       <% end %>
 
-      <div>
-          <%= form.text_field :name, autofocus: true, autocomplete: "username",
-                              placeholder: "Enter your name", value: @user.name,
-                              class: "input" %>
+      <div class="w-full">
+        <%= form.text_field :name, autofocus: true, autocomplete: "username",
+                            placeholder: "Enter your name", value: @user.name,
+                            class: "input" %>
       </div>
 
-      <div>
-        <%= form.email_field :email_address, disabled: true, label: "Email",
-                             placeholder: "Changing Email address is pending", value: "",
+      <div class="w-full">
+        <%= form.email_field :email_address, disabled: @user.persisted?, label: "Email",
+                             placeholder: "Changing Email address is pending",
                              class: "input" %>
       </div>
 
-      <div>
+      <%- if @user.new_record? %>
+        <div class="w-full">
+          <%= form.password_field :password, label: "Password", class: "input", placeholder: "Password 8-72 characters" %>
+        </div>
+        <div class="w-full">
+          <%= form.password_field :password_confirmation, label: "Password", placeholder: "Confirm Password", class: "input" %>
+        </div>
+      <% end %>
+
+      <div class="w-full">
         <%= form.label "Visible to other users? ", for: "user_visible" %>
         &nbsp;
         <%= form.checkbox :visible, class: "checkbox", checked: @user.visible %>
       </div>
 
-      <div>
+      <div class="w-full">
         <%= form.label "Who I Am" %>
         <%= form.textarea :who_am_i, value: @user.who_am_i, class: "textarea prose" %>
       </div>

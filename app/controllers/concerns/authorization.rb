@@ -6,6 +6,8 @@ module Authorization
   included do
     include Pundit::Authorization
     after_action :verify_pundit_authorization
+
+    rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   end
 
   def pundit_user
@@ -19,5 +21,10 @@ module Authorization
     else
       verify_authorized
     end
+  end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_back_or_to(root_path)
   end
 end

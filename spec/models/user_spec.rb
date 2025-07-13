@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:name).is_at_least(min_name).is_at_most(max_name) }
     it { is_expected.to validate_length_of(:password).is_at_least(min_pass)
                                                      .is_at_most(max_pass)
-                                                     .on([ :registration, :password_change ]) }
+                                                     .on([:registration, :password_change]) }
     it { is_expected.to validate_uniqueness_of(:name).ignoring_case_sensitivity }
     it { is_expected.to validate_uniqueness_of(:email_address).ignoring_case_sensitivity }
   end
@@ -35,9 +35,10 @@ RSpec.describe User, type: :model do
     end
 
     describe 'visible scope' do
-      let(:users) { [base, visible, invisible] }
       it "should return only visible users" do
-        expect(User.unscoped.visible).to eq(users.first(2))
+        users = [ base, visible, invisible ]
+        # warn users.inspect
+        expect(User.visible.to_a).to eq(users.first(2))
       end
     end
   end
