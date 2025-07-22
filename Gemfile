@@ -45,6 +45,7 @@ gem "thruster", require: false
 group :test do
   gem "pundit-matchers", "~> 4.0.0"
   gem "shoulda-matchers", "~> 6.0"
+  gem "rails-controller-testing", "~> 1.0"
 end
 
 group :development do
@@ -74,3 +75,4 @@ gem "rails_icons", "~> 1.3"
 gem "breadcrumbs_on_rails", "~> 4.1"
 
 gem "pundit", "~> 2.5"
+

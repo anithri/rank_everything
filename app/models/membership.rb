@@ -4,6 +4,12 @@ class Membership < ApplicationRecord
   belongs_to :user
 
   validates :role, presence: true
+
+  def roles
+    @roles_provider ||= TeamRole.new(user, role)
+  end
+
+  delegate :has_role?, to: :roles
 end
 
 # == Schema Information

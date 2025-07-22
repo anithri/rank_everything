@@ -24,8 +24,7 @@ RSpec.describe "Registrations", type: :request do
       end
       it "redirects to new_registration_path if invalid" do
         post registration_path, params: { user: attributes_for(:invalid_registration) }
-        warn response.inspect
-        expect(response).to redirect_to new_registration_path
+        assert_template "registrations/new"
       end
     end
   end

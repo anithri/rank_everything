@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
 
   # GET /teams or /teams.json
   def index
-    @teams = policy_scope(Team)
+    @teams = policy_scope(Team.includes(:memberships))
 
     add_breadcrumb "Teams", teams_path
   end
@@ -68,7 +68,7 @@ class TeamsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_team
-    @team = Team.find(params.expect(:id))
+    @team = Team.includes(memberships: :user).find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

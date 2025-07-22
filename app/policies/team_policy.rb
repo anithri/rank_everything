@@ -1,4 +1,5 @@
 class TeamPolicy < UserPolicy
+  # include MemberRole
   # region # Actions
 
   # TODO deep changes needed when team roles is implemented
@@ -6,7 +7,7 @@ class TeamPolicy < UserPolicy
     return false if guest?
     return true if record.visible?
 
-    admin? || owner?
+    admin? || owner? #|| manager? || editor? || contributor? || voter?
   end
 
   # until it's decided if one user can own multiple teams
