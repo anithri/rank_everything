@@ -1,9 +1,10 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: %i[ show edit update destroy ]
+  before_action :set_team, only: %i[ index new create ]
 
   # GET /memberships or /memberships.json
   def index
-    @memberships = Membership.all
+    @memberships = @team.memberships.includes(:user)
   end
 
   # GET /memberships/1 or /memberships/1.json
@@ -12,7 +13,7 @@ class MembershipsController < ApplicationController
 
   # GET /memberships/new
   def new
-    @membership = Membership.new
+    @membership = @team.memberships.build
   end
 
   # GET /memberships/1/edit
@@ -21,7 +22,7 @@ class MembershipsController < ApplicationController
 
   # POST /memberships or /memberships.json
   def create
-    @membership = Membership.new(membership_params)
+    @membership = @team.memberships.build(membership_params)
 
     respond_to do |format|
       if @membership.save
@@ -58,13 +59,19 @@ class MembershipsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_membership
-      @membership = Membership.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def membership_params
-      params.expect(membership: [ :team_id, :user_id, :role ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_membership
+    @membership = Membership.includes(:user, :team).find(params.expect(:id))
+    @team = @membership.team
+  end
+
+  def set_team
+    @team = Team.find(params[:team_id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def membership_params
+    params.expect(membership: [:team_id, :user_id, :role])
+  end
 end

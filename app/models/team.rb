@@ -5,16 +5,7 @@ class Team < ApplicationRecord
   belongs_to :owner, class_name: "User"
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user, class_name: "User"
-
-  has_many :voter_memberships, -> { voter }, class_name: "Membership"
-  has_many :voters, through: :voter_memberships, source: :user, class_name: "User"
-
-  has_many :contributor_memberships, -> { contributor }, class_name: "Membership"
-  has_many :contributors, through: :contributor_memberships, source: :user, class_name: "User"
-  has_many :editor_memberships, -> { editor }, class_name: "Membership"
-  has_many :editors, through: :editor_memberships, source: :user, class_name: "User"
-  has_many :manager_memberships, -> { manager }, class_name: "Membership"
-  has_many :managers, through: :manager_memberships, source: :user, class_name: "User"
+  has_many :ranked_lists, dependent: :destroy
 
   validates :name,
             presence: true,

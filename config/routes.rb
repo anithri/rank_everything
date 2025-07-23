@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :ranked_lists
   resources :teams, except: [ :destroy ] do
     resources :memberships, shallow: true
+    resources :ranked_lists, shallow: true
   end
   resources :users, except: [ :destroy ]
   resource :registration, only: [ :new, :create ]
