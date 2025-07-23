@@ -20,10 +20,10 @@ anithri = User.find_by(name: 'anithri') || User.create(
 
 users = Array.new(20) do
   # try to keep email and name unique
-  email = Faker::Internet.email
+  email = Faker::Internet.unique.email
 
   next if User.find_by(email_address: email)
-  name = Faker::Name.name
+  name = Faker::Name.unique.name
   User.find_by(name: name) || User.create(
     name: name,
     email_address: email,
@@ -51,22 +51,18 @@ wra.update(
 )
 wra.memberships.create(user: anithri, role: :manager)
 
-users.sample(5).each do |u|
+users.sample(8).each do |u|
   wra.memberships.create(user: u, role: membership_roles.sample)
 end
 
-teams = Array.new(15) do
-  name = Faker::Team.name
-  owner = users.sample
-  t = Team.find_by(name: name) || Team.create(
-    name: name,
-    visible: rand(4).nonzero?,
-    owner: owner
+book_list = RankedList.create(
+    team: wra,
+    name: "Favorite Books",
+    description: "What do you love to read?",
   )
-  t.memberships.create(user: owner, role: :manager)
+album_list =  RankedList.create(
+    team: wra,
+    name: "Favorite Albums",
+    description: "What do you love to listen to?",
+  )
 
-  users.sample(5).each do |u|
-    t.memberships.create(user: u, role: membership_roles.sample)
-  end
-  t
-end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ranked_lists
   resources :teams, except: [ :destroy ] do
     resources :memberships, shallow: true
   end

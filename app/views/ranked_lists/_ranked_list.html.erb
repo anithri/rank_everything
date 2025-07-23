@@ -1,0 +1,30 @@
+<div id="<%= dom_id ranked_list %>" class="w-full sm:w-auto my-5 space-y-5">
+  <div>
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= ranked_list.name %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= ranked_list.description %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Ranking method:</strong>
+    <%= ranked_list.ranking_method %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Team:</strong>
+    <%= ranked_list.team_id %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Visible:</strong>
+    <%= ranked_list.visible? ? "Yes" : "No" %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Items count:</strong>
+    <%= ranked_list.items_count %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Votes count:</strong>
+    <%= ranked_list.votes_count %>
+  </div>
+</div>

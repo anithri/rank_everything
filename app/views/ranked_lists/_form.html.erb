@@ -1,0 +1,52 @@
+<%= form_with(model: ranked_list, class: "contents") do |form| %>
+  <% if ranked_list.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(ranked_list.errors.count, "error") %> prohibited this ranked_list from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% ranked_list.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:name].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:description].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :ranking_method %>
+    <%= form.number_field :ranking_method, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:ranking_method].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:ranking_method].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :team_id %>
+    <%= form.text_field :team_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:team_id].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:team_id].any?}] %>
+  </div>
+
+  <div class="my-5 flex items-center gap-2">
+    <%= form.label :visible %>
+    <%= form.checkbox :visible, class: ["block shadow-sm rounded-md border order-first h-5 w-5", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:visible].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:visible].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :items_count %>
+    <%= form.number_field :items_count, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:items_count].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:items_count].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :votes_count %>
+    <%= form.number_field :votes_count, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ranked_list.errors[:votes_count].none?, "border-red-400 focus:outline-red-600": ranked_list.errors[:votes_count].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
