@@ -26,6 +26,8 @@ module TeamMembershipRoles
 
   # get the membership record for the user and team
   def role
+    return false unless user.respond_to?(:memberships)
+
     user.memberships.find_by(team: team).try(:role)
   end
 
@@ -40,17 +42,17 @@ module TeamMembershipRoles
 
   # @return [Boolean] true if role is one of voter, contributor, editor, or manager
   def voter?
-    role == :voter
+    role =="voter"
   end
 
   # @return [Boolean] true if role is one of contributor, editor, or manager
   def contributor?
-    role == :contributor
+    role =="contributor"
   end
 
   # @return [Boolean] true if role is editor or manager
   def editor?
-    role == :editor
+    role =="editor"
   end
 
   def member?
@@ -59,7 +61,7 @@ module TeamMembershipRoles
 
   # @return [Boolean] true if role is manager
   def manager?
-    role == :manager
+    role =="manager"
   end
 
   included do

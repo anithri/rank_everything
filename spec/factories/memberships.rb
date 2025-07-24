@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :membership do
     team { association(:team) }
     user { association(:user) }
-    role { "visitor" }
+    role { "voter" }
   end
   factory :contributor_membership do
     role { "contributor" }

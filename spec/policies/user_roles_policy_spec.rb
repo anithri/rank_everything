@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'rails_helper'
 
 class UserRolesPolicy < ApplicationPolicy
   include UserRoles
@@ -34,7 +35,7 @@ RSpec.describe UserRolesPolicy, type: :policy do
       end
     end
     describe "#public?" do
-      it "returns false" do
+      it "returns true" do
         expect(subject.public?).to be_truthy
       end
     end
@@ -46,7 +47,7 @@ RSpec.describe UserRolesPolicy, type: :policy do
   end
 
   context "admin_user" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, site_role: "admin") }
     describe "#guest?" do
       it "returns false" do
         expect(subject.guest?).to be_falsey
@@ -59,7 +60,7 @@ RSpec.describe UserRolesPolicy, type: :policy do
     end
     describe "#admin?" do
       it "returns true" do
-        expect(subject.admin?).to be_falsey
+        expect(subject.admin?).to be_truthy
       end
     end
   end
