@@ -4,25 +4,48 @@ class MembershipsController < ApplicationController
 
   # GET /memberships or /memberships.json
   def index
-    @memberships = @team.memberships.includes(:user)
+    @memberships = policy_scope @team.memberships.includes(:user).order("role desc", "users.name")
+
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Memberships", team_memberships_path(@team)
   end
 
   # GET /memberships/1 or /memberships/1.json
   def show
+    authorize @membership
+
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Memberships", team_memberships_path(@team)
+    add_breadcrumb @membership.user.name, membership_path(@membership)
   end
 
   # GET /memberships/new
   def new
     @membership = @team.memberships.build
+    authorize @membership
+
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Memberships", team_memberships_path(@team)
+    add_breadcrumb "new", new_team_membership_path(@team)
   end
 
   # GET /memberships/1/edit
   def edit
+    authorize @membership
+
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Membership", team_memberships_path(@team)
+    add_breadcrumb "edit", edit_membership_path(@team)
   end
 
   # POST /memberships or /memberships.json
   def create
     @membership = @team.memberships.build(membership_params)
+    authorize @membership
 
     respond_to do |format|
       if @membership.save
@@ -37,6 +60,8 @@ class MembershipsController < ApplicationController
 
   # PATCH/PUT /memberships/1 or /memberships/1.json
   def update
+    authorize @membership
+
     respond_to do |format|
       if @membership.update(membership_params)
         format.html { redirect_to @membership, notice: "Membership was successfully updated." }
@@ -50,10 +75,11 @@ class MembershipsController < ApplicationController
 
   # DELETE /memberships/1 or /memberships/1.json
   def destroy
+    authorize @membership
     @membership.destroy!
 
     respond_to do |format|
-      format.html { redirect_to memberships_path, status: :see_other, notice: "Membership was successfully destroyed." }
+      format.html { redirect_to team_memberships_path(@team), status: :see_other, notice: "Membership was successfully destroyed." }
       format.json { head :no_content }
     end
   end

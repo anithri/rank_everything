@@ -1,0 +1,10 @@
+<div class="flex flex-column align-items-center gap-4 w-full">
+  <span class="font-bold">
+    <%= link_to membership.user.name, membership_path(membership) %>
+  </span>
+  <span class="flex-auto text-right"><%= membership.role.titleize %></span>
+  <span class="join join-horizontal">
+    <%= link_to "Edit", edit_membership_path(membership), class: "btn btn-success btn-sm join-item" %>
+    <%= button_to "Destroy", membership, method: :delete, class: "btn btn-error btn-sm join-item", data: { turbo_confirm: "Are you sure?" } %>
+  </span>
+</div>

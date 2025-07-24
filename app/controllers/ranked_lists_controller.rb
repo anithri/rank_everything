@@ -4,25 +4,47 @@ class RankedListsController < ApplicationController
 
   # GET /ranked_lists or /ranked_lists.json
   def index
-    @ranked_lists = @team.ranked_lists.all
+    @ranked_lists = policy_scope @team.ranked_lists.all
+
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Ranked Lists", team_ranked_lists_path(@team)
   end
 
   # GET /ranked_lists/1 or /ranked_lists/1.json
   def show
+    authorize @ranked_list
+
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Ranked Lists", team_ranked_lists_path(@team)
+    add_breadcrumb @ranked_list.name, ranked_list_path(@team)
   end
 
   # GET /team/1/ranked_lists/new
   def new
     @ranked_list = @team.ranked_lists.build
+    authorize @ranked_list
+
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Ranked Lists", team_ranked_lists_path(@team)
+    add_breadcrumb "New", new_team_ranked_list_path(@team)
   end
 
   # GET /ranked_lists/1/edit
   def edit
+    authorize @ranked_list
+
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "Ranked Lists", team_ranked_lists_path(@team)
+    add_breadcrumb @ranked_list.name, ranked_list_path(@ranked_list)
+    add_breadcrumb "edit", edit_ranked_list_path(@ranked_list)
   end
 
   # POST /ranked_lists or /ranked_lists.json
   def create
     @ranked_list = RankedList.new(team: @team, **ranked_list_params)
+    authorize @ranked_list
 
     respond_to do |format|
       if @ranked_list.save
@@ -37,6 +59,8 @@ class RankedListsController < ApplicationController
 
   # PATCH/PUT /ranked_lists/1 or /ranked_lists/1.json
   def update
+    authorize @ranked_list
+
     respond_to do |format|
       if @ranked_list.update(ranked_list_params)
         format.html { redirect_to @ranked_list, notice: "Ranked list was successfully updated." }
@@ -50,6 +74,8 @@ class RankedListsController < ApplicationController
 
   # DELETE /ranked_lists/1 or /ranked_lists/1.json
   def destroy
+    authorize @ranked_list
+
     @ranked_list.destroy!
 
     respond_to do |format|

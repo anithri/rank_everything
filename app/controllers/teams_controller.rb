@@ -12,7 +12,8 @@ class TeamsController < ApplicationController
   def show
     authorize Current.user
 
-    add_breadcrumb "Team", team_path(@team)
+    add_breadcrumb "Teams", teams_path
+    add_breadcrumb @team.name, team_path(@team)
   end
 
   # GET /teams/new
@@ -21,7 +22,8 @@ class TeamsController < ApplicationController
     authorize @team
 
     add_breadcrumb "Teams", teams_path
-    add_breadcrumb "New Team", new_team_path
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "new", new_team_path
   end
 
   # GET /teams/1/edit
@@ -29,8 +31,8 @@ class TeamsController < ApplicationController
     authorize @team
 
     add_breadcrumb "Teams", teams_path
-    add_breadcrumb Current.user.name, edit_team_path(@team)
-    add_breadcrumb "Edit", edit_team_path(@team)
+    add_breadcrumb @team.name, team_path(@team)
+    add_breadcrumb "edit", edit_team_path(@team)
   end
 
   # POST /teams or /teams.json

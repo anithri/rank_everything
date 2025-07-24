@@ -6,7 +6,7 @@ class CreateRankedLists < ActiveRecord::Migration[8.0]
       t.integer :ranking_method, default: 0
       t.references :team, null: false, foreign_key: true
       t.boolean :visible, default: true
-      t.integer :items_count, default: 0
+      t.integer :ranked_items_count, default: 0
       t.integer :votes_count, default: 0
 
       t.timestamps
