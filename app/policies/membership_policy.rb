@@ -5,6 +5,18 @@ class MembershipPolicy < ApplicationPolicy
   # code, beware of possible changes to the ancestors:
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
+  def show?
+    admin? || owner? || contributor?
+  end
+
+  def create?
+    admin? || owner? || editor?
+  end
+
+  def update?
+    admin? || owner? || editor?
+  end
+
   private def owner?
     record.user == user
   end

@@ -1,16 +1,17 @@
 class UserPolicy < ApplicationPolicy
-  # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
+  include VisibleTraits
+
   # region Actions
   def show?
-    admin? || owner? || record.visible?
+    admin? || owner? || visible?
   end
 
   def create?
-    admin?
+    admin? || guest?
   end
 
   def update?
-    owner? || admin?
+    admin? || owner?
   end
 
   # endregion
@@ -24,7 +25,7 @@ class UserPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       return scope.none unless user
-      return scope.all.order(:name) if user&.admin?
+      return scope.all if user&.admin?
 
       scope.where(id: user&.id).or(User.visible).order(:name)
     end

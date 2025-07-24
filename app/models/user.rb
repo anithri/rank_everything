@@ -29,6 +29,7 @@ class User < ApplicationRecord
 
   default_scope -> { order(:name) }
   scope :visible, -> { where(visible: true) }
+  scope :invisible, -> { where(visible: false) }
 end
 
 # == Schema Information

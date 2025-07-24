@@ -3,13 +3,15 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = policy_scope(User)
+    @users = policy_scope(User.order(:name).includes(memberships: :team))
+
     add_breadcrumb "Users", users_path
   end
 
   # GET /users/1 or /users/1.json
   def show
     authorize @user
+
     add_breadcrumb "Users", users_path
     add_breadcrumb @user.name, user_path(@user)
   end
@@ -18,6 +20,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     authorize @user
+
     add_breadcrumb "Users", users_path
     add_breadcrumb "New User", new_user_path
   end
@@ -72,10 +75,10 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user).require([ :name, :email_address, :visible, :who_am_i, :avatar_url ])
+    params.fetch(:user).require([:name, :visible, :who_am_i])
   end
 
   def new_user_params
-    params.fetch(:user).require([ :name, :email_address, :visible, :who_am_i, :avatar_url, :password, :password_confirmation ])
+    params.fetch(:user).require([:name, :email_address, :visible, :who_am_i, :password, :password_confirmation])
   end
 end

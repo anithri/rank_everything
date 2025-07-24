@@ -1,24 +1,34 @@
 class RankedListPolicy < ApplicationPolicy
-  # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
-  # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
-  # In most cases the behavior will be identical, but if updating existing
-  # code, beware of possible changes to the ancestors:
-  # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
+  include TeamMembershipRoles
+  include VisibleTraits
 
-  attr_reader :team
-
-  def initialize(ranked_list, membership)
-    super
-    @team = membership.team
+  def team
+    record.team
   end
 
-  private def owner?
-    record.owner == user
+  def show?
+    visible? || contributor? || manager? || editor? || team_owner?
+  end
+
+  def create?
+    admin? || team_owner? || manager?
+  end
+
+  def update?
+    admin? || team_owner? || manager? || editor?
+  end
+
+  def destroy?
+    admin? || team_owner?
   end
 
   class Scope < ApplicationPolicy::Scope
+    include UserRoles
+
     def resolve
-      scope.all
+      return scope.none if guest?
+      return scope.all if admin?
+      scope.visible
     end
   end
 end

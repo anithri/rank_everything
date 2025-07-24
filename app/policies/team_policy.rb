@@ -1,34 +1,35 @@
 class TeamPolicy < UserPolicy
-  # include MemberRole
-  # region # Actions
+  include TeamMembershipRoles
+  include VisibleTraits
+
+  def team
+    record
+  end
 
   # TODO deep changes needed when team roles is implemented
   def show?
-    return false if guest?
-    return true if record.visible?
-
-    admin? || owner? #|| manager? || editor? || contributor? || voter?
+     visible? || admin? || member?
   end
 
   # until it's decided if one user can own multiple teams
   def create?
-    user?
+    public?
   end
 
-  private
-
-  # endregion
-
-  # region # Predicates
-  private def owner?
-    record.owner == user
+  def update?
+    admin? || team_owner? || manager? || editor?
   end
-  # endregion
+
+  def destroy?
+    admin?
+  end
 
   class Scope < ApplicationPolicy::Scope
+    include UserRoles
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all.order(:name) if user&.admin?
+      scope.visible if public?
+      scope.all if admin?
 
       scope.where(owner: user).or(Team.visible).order(:name)
     end
