@@ -2,9 +2,6 @@
 
 # class to testteam_role based access controls
 class TeamMembershipRole < UserRole
-  # method must be implemented in the including class
-  # @return [Team] extract the team from the record
-
   def team_role
     record.memberships.find_by(user: user).try(:role)
   end

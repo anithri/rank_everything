@@ -3,7 +3,7 @@ class TeamPolicy < UserPolicy
   ROLE_CLASS = TeamMembershipRole.freeze
 
   def show?
-    allows :visible, :admin, :member
+    allows :visible, :admin, :owner, :member
   end
 
   def create?
@@ -11,7 +11,7 @@ class TeamPolicy < UserPolicy
   end
 
   def update?
-    allows :admin, :team_owner, :manager, :editor
+    allows :admin, :owner, :manager, :editor
   end
 
   def destroy?

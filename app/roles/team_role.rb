@@ -2,6 +2,7 @@
 
 # class to testteam_role based access controls
 class TeamRole < UserRole
+  ROLE_CLASS = TeamMembershipRole.freeze
   # method must be implemented in the including class
   # @return [Team] extract the team from the record
 
@@ -17,7 +18,7 @@ class TeamRole < UserRole
     user.nil?
   end
 
-  def team_owner?
+  def owner?
     record.owner == user
   end
 

@@ -1,4 +1,5 @@
 class MembershipPolicy < ApplicationPolicy
+  ROLE_CLASS = TeamMembershipRole.freeze
   # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
   # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
   # In most cases the behavior will be identical, but if updating existing
@@ -10,23 +11,27 @@ class MembershipPolicy < ApplicationPolicy
   end
 
   def role
-    @role ||= role_class.new(user, record)
+    @role ||= role_class.new(user, team)
   end
 
   def show?
-    admin? || owner? || contributor?
+    allows :admin, :owner, :member
   end
 
   def create?
-    admin? || owner? || editor?
+    allows :admin, :owner, :manager, :editor
   end
 
   def update?
-    admin? || owner? || editor?
+    allows :admin, :owner, :manager, :editor
+  end
+
+  def destroy?
+    allows :admin, :owner, :manager
   end
 
   private def owner?
-    record.user == user
+    team.owner == user
   end
 
   class Scope < ApplicationPolicy::Scope
