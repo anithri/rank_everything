@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 # str
+CRUD_ACTIONS = %i[show new create edit update]
 
 RSpec.describe UserPolicy, type: :policy do
   subject { described_class.new(current_user, user) }
@@ -18,17 +19,17 @@ RSpec.describe UserPolicy, type: :policy do
     let(:current_user) { admin }
     context "for visible user" do
       let(:user) { bruce }
-      it { is_expected.to permit_all_actions }
+      it { is_expected.to permit_actions(CRUD_ACTIONS) }
     end
 
     context "for invisible user" do
       let(:user) { thomas }
-      it { is_expected.to permit_all_actions }
+      it { is_expected.to permit_actions(CRUD_ACTIONS) }
     end
 
     context "for admin user" do
       let(:user) { admin }
-      it { is_expected.to permit_all_actions }
+      it { is_expected.to permit_actions(CRUD_ACTIONS) }
     end
   end
 
@@ -46,12 +47,12 @@ RSpec.describe UserPolicy, type: :policy do
 
     context "for invisible user" do
       let(:user) { thomas }
-      it { is_expected.to forbid_all_actions }
+      it { is_expected.to forbid_actions(CRUD_ACTIONS) }
     end
 
     context "for admin user" do
       let(:user) { admin }
-      it { is_expected.to forbid_all_actions }
+      it { is_expected.to forbid_actions(CRUD_ACTIONS) }
     end
   end
 

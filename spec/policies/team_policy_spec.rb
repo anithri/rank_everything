@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+CRUD_ACTIONS = %i[show new create edit update destroy]
+
 RSpec.describe TeamPolicy, type: :policy do
   subject { described_class.new(current_user, current_team) }
 
@@ -12,11 +14,11 @@ RSpec.describe TeamPolicy, type: :policy do
     describe "authorization for" do
       describe "visible team" do
         let(:current_team) { visible_team }
-        it { is_expected.to permit_all_actions }
+        it { is_expected.to permit_actions(CRUD_ACTIONS) }
       end
       describe "invisible team" do
         let(:current_team) { invisible_team }
-        it { is_expected.to permit_all_actions }
+        it { is_expected.to permit_actions(CRUD_ACTIONS) }
       end
     end
   end
@@ -29,7 +31,7 @@ RSpec.describe TeamPolicy, type: :policy do
       describe "owned team" do
         let(:current_team) { owned_team }
 
-        it { is_expected.to permit_all_actions }
+        it { is_expected.to permit_actions(CRUD_ACTIONS) }
       end
     end
   end
@@ -58,12 +60,12 @@ RSpec.describe TeamPolicy, type: :policy do
       describe "visible team" do
         let(:current_team) { visible_team }
 
-        it { is_expected.to forbid_all_actions }
+        it { is_expected.to forbid_actions(CRUD_ACTIONS) }
       end
       describe "invisible team" do
         let(:current_team) { invisible_team }
 
-        it { is_expected.to forbid_all_actions }
+        it { is_expected.to forbid_actions(CRUD_ACTIONS) }
       end
     end
   end

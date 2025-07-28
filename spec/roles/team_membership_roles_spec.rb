@@ -1,15 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-class TeamMembershipRolesPolicy < ApplicationPolicy
-  include TeamMembershipRoles
-
-  def team
-    record
-  end
-end
-
-RSpec.describe TeamMembershipRolesPolicy, type: :policy do
+RSpec.describe TeamMembershipRole do
   subject { described_class.new(user, team) }
   let(:membership) { create(:membership) }
 
@@ -20,70 +12,52 @@ RSpec.describe TeamMembershipRolesPolicy, type: :policy do
     let(:user) { nil }
 
     context "when user is not logged in" do
-      it "returns true" do
-        expect(subject.guest?).to be_truthy
-      end
+      it { expect(subject.guest?).to be_truthy }
     end
 
     context "when user is logged in" do
       let(:user) { create(:user) }
-      it "returns false" do
-        expect(subject.guest?).to be_falsey
-      end
+      it { expect(subject.guest?).to be_falsey }
     end
   end
 
   describe "#public?" do
     context "when user is not logged in" do
       let(:user) { nil }
-      it "returns false" do
-        expect(subject.public?).to be_falsey
-      end
+      it { expect(subject.public?).to be_falsey }
     end
 
     context "when user is logged in" do
       let(:user) { create(:user) }
-      it "returns true" do
-        expect(subject.public?).to be_truthy
-      end
+        it { expect(subject.public?).to be_truthy }
     end
   end
 
   describe "#member?" do
     context "when no user" do
       let(:user) { nil }
-      it "returns false" do
-        expect(subject.member?).to be_falsey
-      end
+      it{ expect(subject.member?).to be_falsey }
     end
 
     context "when non member use" do
       let(:user) { create(:user) }
-      it "returns false" do
-        expect(subject.member?).to be_falsey
-      end
+      it { expect(subject.member?).to be_falsey }
     end
 
     context "when member user" do
-      it "returns true" do
-        expect(subject.member?).to be_truthy
-      end
+      it { expect(subject.member?).to be_truthy }
     end
   end
 
   describe "#voter?" do
     context "when no user" do
       let(:user) { nil }
-      it "returns false" do
-        expect(subject.voter?).to be_falsey
-      end
+      it { expect(subject.voter?).to be_falsey }
     end
 
     context "when non member use" do
       let(:user) { create(:user) }
-      it "returns false" do
-        expect(subject.voter?).to be_falsey
-      end
+      it { expect(subject.voter?).to be_falsey }
     end
 
     context "when member user, with different role" do
@@ -98,25 +72,19 @@ RSpec.describe TeamMembershipRolesPolicy, type: :policy do
     end
 
     context "when member user has the voter role" do
-      it "returns true" do
-        expect(subject.voter?).to be_truthy
-      end
+      it { expect(subject.voter?).to be_truthy }
     end
   end
 
   describe "#contributor?" do
     context "when no user" do
       let(:user) { nil }
-      it "returns false" do
-        expect(subject.contributor?).to be_falsey
-      end
+      it { expect(subject.contributor?).to be_falsey }
     end
 
     context "when non member use" do
       let(:user) { create(:user) }
-      it "returns false" do
-        expect(subject.contributor?).to be_falsey
-      end
+      it { expect(subject.contributor?).to be_falsey }
     end
 
     context "when member user, with different role" do
@@ -203,11 +171,8 @@ RSpec.describe TeamMembershipRolesPolicy, type: :policy do
     context "when member user has the manager role" do
       let(:membership) { create(:membership, role: "manager") }
 
-      it "returns true" do
-        expect(subject.manager?).to be_truthy
-      end
+      it { expect(subject.manager?).to be_truthy }
     end
   end
-
 end
 

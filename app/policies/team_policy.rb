@@ -1,13 +1,13 @@
 class TeamPolicy < UserPolicy
-  include TeamMembershipRoles
-  include VisibleTraits
-
   def team
     record
   end
 
+
+
   # TODO deep changes needed when team roles is implemented
   def show?
+    has_role :visible?, :admin?, :member?
      visible? || admin? || member?
   end
 
@@ -25,7 +25,7 @@ class TeamPolicy < UserPolicy
   end
 
   class Scope < ApplicationPolicy::Scope
-    include UserRoles
+    include UserRole
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       scope.visible if public?

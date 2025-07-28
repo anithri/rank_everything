@@ -1,34 +1,15 @@
 # frozen_string_literal: true
 
-# This concern is meant to add role based rules to a policy
-# I considered making the roles more dynamic but not hitting a pain point yet
-# @example
-#  class TeamPolicy < ApplicationPolicy
-#    include TeamMembershipRoles
-#    def team
-#      record
-#    end
-#  end
-#  class TeamMembershipPolicy < ApplicationPolicy
-#    include TeamMembershipRoles
-#    def team
-#      record.team
-#    end
-#  end
-module TeamMembershipRoles
-  extend ActiveSupport::Concern
-
+# class to test role based access controls
+class TeamMembershipRole < UserRole
   # method must be implemented in the including class
   # @return [Team] extract the team from the record
   def team
-    raise NotImplementedError, "Implement team in #{self.class.name}"
+    record
   end
 
-  # get the membership record for the user and team
   def role
-    return false unless user.respond_to?(:memberships)
-
-    user.memberships.find_by(team: team).try(:role)
+    team.memberships.find_by(user: user).try(:role)
   end
 
   def team_owner?
@@ -63,19 +44,4 @@ module TeamMembershipRoles
   def manager?
     role =="manager"
   end
-
-  included do
-  end
-
-  class_methods do
-  end
-end
-
-class Team
-  include TeamMembershipRoles
-
-  def team
-    record
-  end
-
 end

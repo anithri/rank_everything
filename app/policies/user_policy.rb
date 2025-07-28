@@ -1,7 +1,6 @@
 class UserPolicy < ApplicationPolicy
   include VisibleTraits
 
-  # region Actions
   def show?
     admin? || owner? || visible?
   end
@@ -14,13 +13,9 @@ class UserPolicy < ApplicationPolicy
     admin? || owner?
   end
 
-  # endregion
-
-  # region Predicates
   private def owner?
     record == user
   end
-  # endregion
 
   class Scope < ApplicationPolicy::Scope
     def resolve

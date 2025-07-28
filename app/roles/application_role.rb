@@ -1,21 +1,14 @@
 # frozen_string_literal: true
 
-class ApplicationPermissions
-  class << self
-    def roles
-      self.class::ROLES
-    end
-  end
-end
+class ApplicationRole
+  attr_reader :user, :record
 
-
-class TeamPermissions < ApplicationPermissions
-  ROLES = { voter: 0, contributor: 10, editor: 20, manager: 30 }
-  def all_roles
-
+  def initialize(user, record)
+    @user = user
+    @record = record
   end
 
-  def acts_as
-    ROLES.invert
+  def allows(*roles)
+    roles.any? { |role| self.send("#{role}?") }
   end
 end

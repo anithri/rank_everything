@@ -1,5 +1,5 @@
 class RankedListPolicy < ApplicationPolicy
-  include TeamMembershipRoles
+  include TeamMembershipRole
   include VisibleTraits
 
   def team
@@ -23,7 +23,7 @@ class RankedListPolicy < ApplicationPolicy
   end
 
   class Scope < ApplicationPolicy::Scope
-    include UserRoles
+    include UserRole
 
     def resolve
       return scope.none if guest?

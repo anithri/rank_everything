@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 class UserRolesPolicy < ApplicationPolicy
-  include UserRoles
+  include UserRole
 end
 
 RSpec.describe UserRolesPolicy, type: :policy do
