@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # class to testteam_role based access controls
-class TeamMembershipRole < UserRole
+class TeamRole < UserRole
   # method must be implemented in the including class
   # @return [Team] extract the team from the record
 
@@ -23,7 +23,7 @@ class TeamMembershipRole < UserRole
 
   # @return [Boolean] true if user is authenticated but has noteam_role
   def public?
-    user
+    user && team_role.nil?
   end
 
   # @return [Boolean] true ifteam_role is one of voter, contributor, editor, or manager

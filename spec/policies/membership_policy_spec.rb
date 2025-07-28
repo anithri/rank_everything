@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe MembershipPolicy, type: :policy do
-  subject { described_class }
+  subject { described_class.new(user, membership) }
+  let(:user) { create(:user) }
+  let(:team) { create(:team) }
+  let(:membership) { create(:membership, user: user, team: team) }
 
   describe "admin" do
     # Can do everything
@@ -29,8 +32,14 @@ RSpec.describe MembershipPolicy, type: :policy do
     # can always vote
   end
 
+  describe "public" do
+    # can show
+    # can vote on open lists
+  end
+
   describe "guest" do
     # can show
     # can vote on open lists
   end
+
 end

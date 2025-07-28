@@ -1,63 +1,54 @@
 require 'rails_helper'
 
-# str
-CRUD_ACTIONS = %i[show new create edit update]
-
 RSpec.describe UserPolicy, type: :policy do
   subject { described_class.new(current_user, user) }
 
-  let(:bruce) { create :bruce }
-  let(:babs) { create :babs }
-  let(:thomas) { create :thomas }
-  let(:admin) { create :admin }
-
-  # permissions ".scope" do
-  #   pending "add some examples to (or delete) #{__FILE__}"
-  # end
+  let(:user) { create(:user) }
 
   context "as admin" do
-    let(:current_user) { admin }
+    let(:current_user) { create(:admin) }
     context "for visible user" do
-      let(:user) { bruce }
-      it { is_expected.to permit_actions(CRUD_ACTIONS) }
+      it { is_expected.to permit_all_actions }
     end
 
     context "for invisible user" do
-      let(:user) { thomas }
-      it { is_expected.to permit_actions(CRUD_ACTIONS) }
+      it { is_expected.to permit_all_actions }
     end
 
     context "for admin user" do
-      let(:user) { admin }
-      it { is_expected.to permit_actions(CRUD_ACTIONS) }
+      it { is_expected.to permit_all_actions }
     end
   end
 
   context "as general user" do
-    let(:current_user) { bruce }
+    let(:current_user) { create :bruce }
     context "for owner" do
-      let(:user) { bruce }
-      it { is_expected.to permit_only_actions(%i[show edit update]) }
+      let(:user) { current_user }
+      it { is_expected.to forbid_only_actions(%i[destroy create new]) }
     end
 
     context "for visible user" do
-      let(:user) { babs }
+      let(:user) { create :babs }
       it { is_expected.to permit_only_actions(%i[show]) }
     end
 
     context "for invisible user" do
-      let(:user) { thomas }
-      it { is_expected.to forbid_actions(CRUD_ACTIONS) }
+      let(:user) { create :thomas }
+      it { is_expected.to forbid_all_actions }
     end
 
     context "for admin user" do
-      let(:user) { admin }
-      it { is_expected.to forbid_actions(CRUD_ACTIONS) }
+      let(:user) { create :admin }
+      it { is_expected.to forbid_all_actions }
     end
   end
 
   describe "UserPolicy::Scope" do
     subject { described_class::Scope.new(user, User) }
+    let(:admin) { create(:admin) }
+    let(:bruce) { create(:bruce) }
+    let(:babs) { create(:babs) }
+    let(:thomas) { create(:thomas) }
     context "as admin" do
       let(:user) { admin }
       it "should contain all users" do

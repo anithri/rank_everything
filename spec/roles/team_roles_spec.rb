@@ -1,22 +1,33 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe TeamMembershipRole do
+RSpec.describe TeamRole do
   subject { described_class.new(user, team) }
   let(:membership) { create(:membership) }
   let(:user) { membership.user }
   let(:team) { membership.team }
 
-  describe "#guest? and public?" do
+  describe "#guest?" do
+    let(:user) { nil }
+
+    context "when user is not logged in" do
+      it { expect(subject.guest?).to be_truthy }
+    end
+
+    context "when user is logged in" do
+      let(:user) { create(:user) }
+      it { expect(subject.guest?).to be_falsey }
+    end
+  end
+
+  describe "#public?" do
     context "when user is not logged in" do
       let(:user) { nil }
-
-      it { expect(subject.guest?).to be_truthy }
       it { expect(subject.public?).to be_falsey }
     end
 
     context "when user is logged in" do
-      it { expect(subject.guest?).to be_falsey }
+      let(:user) { create(:user) }
       it { expect(subject.public?).to be_truthy }
     end
   end
@@ -24,13 +35,11 @@ RSpec.describe TeamMembershipRole do
   describe "#member?" do
     context "when no user" do
       let(:user) { nil }
-
       it { expect(subject.member?).to be_falsey }
     end
 
-    context "when non member user" do
+    context "when non member use" do
       let(:user) { create(:user) }
-
       it { expect(subject.member?).to be_falsey }
     end
 

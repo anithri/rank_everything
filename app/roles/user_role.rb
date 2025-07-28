@@ -2,6 +2,10 @@
 # concern for user based roles
 class UserRole < ApplicationRole
 
+  def visible?
+    record&.visible?
+  end
+
   # @return [Boolean] true if user is not present
   def guest?
     user.nil?

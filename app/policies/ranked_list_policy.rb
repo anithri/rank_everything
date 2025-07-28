@@ -1,6 +1,6 @@
 class RankedListPolicy < ApplicationPolicy
-  include TeamMembershipRole
-  include VisibleTraits
+
+  ROLE_CLASS = TeamMembershipRole.freeze
 
   def team
     record.team
@@ -23,11 +23,11 @@ class RankedListPolicy < ApplicationPolicy
   end
 
   class Scope < ApplicationPolicy::Scope
-    include UserRole
 
     def resolve
-      return scope.none if guest?
-      return scope.all if admin?
+      return scope.none unless user
+      return scope.all if user.admin?
+
       scope.visible
     end
   end

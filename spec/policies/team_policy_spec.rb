@@ -14,11 +14,11 @@ RSpec.describe TeamPolicy, type: :policy do
     describe "authorization for" do
       describe "visible team" do
         let(:current_team) { visible_team }
-        it { is_expected.to permit_actions(CRUD_ACTIONS) }
+        it { is_expected.to permit_all_actions }
       end
       describe "invisible team" do
         let(:current_team) { invisible_team }
-        it { is_expected.to permit_actions(CRUD_ACTIONS) }
+        it { is_expected.to permit_all_actions }
       end
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe TeamPolicy, type: :policy do
       describe "owned team" do
         let(:current_team) { owned_team }
 
-        it { is_expected.to permit_actions(CRUD_ACTIONS) }
+        it { is_expected.to forbid_only_actions(%i[destroy]) }
       end
     end
   end
@@ -60,12 +60,12 @@ RSpec.describe TeamPolicy, type: :policy do
       describe "visible team" do
         let(:current_team) { visible_team }
 
-        it { is_expected.to forbid_actions(CRUD_ACTIONS) }
+        it { is_expected.to permit_action(:show) }
       end
       describe "invisible team" do
         let(:current_team) { invisible_team }
 
-        it { is_expected.to forbid_actions(CRUD_ACTIONS) }
+        it { is_expected.to forbid_all_actions }
       end
     end
   end

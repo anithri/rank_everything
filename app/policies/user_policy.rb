@@ -1,20 +1,20 @@
 class UserPolicy < ApplicationPolicy
-  include VisibleTraits
+  ROLE_CLASS = UserRole.freeze
 
   def show?
-    admin? || owner? || visible?
+    allows :visible, :admin, :guest
   end
 
   def create?
-    admin? || guest?
+    allows :guest, :admin
   end
 
   def update?
-    admin? || owner?
+    allows(:admin, :owner)
   end
 
-  private def owner?
-    record == user
+  def destroy?
+    allows :admin
   end
 
   class Scope < ApplicationPolicy::Scope

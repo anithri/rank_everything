@@ -1,35 +1,27 @@
 class TeamPolicy < UserPolicy
-  def team
-    record
-  end
+  # define which class to use to resolve roles
+  ROLE_CLASS = TeamMembershipRole.freeze
 
-
-
-  # TODO deep changes needed when team roles is implemented
   def show?
-    has_role :visible?, :admin?, :member?
-     visible? || admin? || member?
+    allows :visible, :admin, :member
   end
 
-  # until it's decided if one user can own multiple teams
   def create?
-    public?
+    allow :public
   end
 
   def update?
-    admin? || team_owner? || manager? || editor?
+    allows :admin, :team_owner, :manager, :editor
   end
 
   def destroy?
-    admin?
+    allow :admin
   end
 
   class Scope < ApplicationPolicy::Scope
-    include UserRole
-    # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.visible if public?
-      scope.all if admin?
+      scope.visible if user
+      scope.all if user.admin?
 
       scope.where(owner: user).or(Team.visible).order(:name)
     end
