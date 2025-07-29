@@ -1,6 +1,5 @@
 class TeamPolicy < UserPolicy
-  # define which class to use to resolve roles
-  ROLE_CLASS = TeamMembershipRole.freeze
+  ROLE_CLASS = TeamRole
 
   def show?
     allows :visible, :admin, :owner, :member
@@ -16,6 +15,16 @@ class TeamPolicy < UserPolicy
 
   def destroy?
     allow :admin
+  end
+
+  private
+
+  def visible?
+    record.visible?
+  end
+
+  def owner?
+    record.owner == user
   end
 
   class Scope < ApplicationPolicy::Scope

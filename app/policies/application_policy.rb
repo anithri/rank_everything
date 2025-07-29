@@ -8,23 +8,6 @@ class ApplicationPolicy
     @record = record
   end
 
-  def role_class
-    if self.class.const_defined? :ROLE_CLASS
-      self.class::ROLE_CLASS
-    else
-      raise NoMethodError, "You must define ROLE_CLASS in #{self.class}"
-    end
-  end
-
-  def role
-    @role ||= role_class.new(user, record)
-  end
-
-  def allow(*roles)
-    role.allows *roles
-  end
-  alias_method :allows, :allow
-
   def show?
     # allow :public
     false
@@ -53,6 +36,22 @@ class ApplicationPolicy
     # allow :admin
     update?
   end
+
+  def role_class
+    return self.class::ROLE_CLASS if self.class.const_defined? :ROLE_CLASS
+
+    raise NoMethodError, "You must define ROLE_CLASS in #{self.class}"
+  end
+
+  def role
+    @role ||= role_class.new(user, record)
+  end
+
+  def allow(*roles)
+    role.allows(*roles)
+  end
+
+  alias_method :allows, :allow
 
   class Scope
     attr_reader :user, :scope

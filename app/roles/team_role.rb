@@ -1,53 +1,40 @@
 # frozen_string_literal: true
 
-# class to testteam_role based access controls
+# class to test role based access controls
 class TeamRole < UserRole
-  ROLE_CLASS = TeamMembershipRole.freeze
-  # method must be implemented in the including class
-  # @return [Team] extract the team from the record
+  def team
+    record
+  end
 
-  def team_role
-    record.memberships.find_by(user: user).try(:role)
+  def role
+    team.memberships.find_by(user: user).try(:role)
+  end
+
+  def member?
+    user && role.present?
+  end
+
+  def voter?
+    role == "voter"
+  end
+
+  def contributor?
+    role == "contributor"
+  end
+
+  def editor?
+    role == "editor"
+  end
+
+  def manager?
+    role == "manager"
   end
 
   def visible?
-    record&.visible?
-  end
-
-  def guest?
-    user.nil?
+    record.visible?
   end
 
   def owner?
     record.owner == user
-  end
-
-  # @return [Boolean] true if user is authenticated but has noteam_role
-  def public?
-    user && team_role.nil?
-  end
-
-  # @return [Boolean] true ifteam_role is one of voter, contributor, editor, or manager
-  def voter?
-    team_role == "voter"
-  end
-
-  # @return [Boolean] true ifteam_role is one of contributor, editor, or manager
-  def contributor?
-    team_role == "contributor"
-  end
-
-  # @return [Boolean] true ifteam_role is editor or manager
-  def editor?
-    team_role == "editor"
-  end
-
-  def member?
-    team_role.present?
-  end
-
-  # @return [Boolean] true ifteam_role is manager
-  def manager?
-    team_role == "manager"
   end
 end

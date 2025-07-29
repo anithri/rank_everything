@@ -1,6 +1,5 @@
 class UserPolicy < ApplicationPolicy
-  ROLE_CLASS = UserRole.freeze
-
+  ROLE_CLASS = UserRole
   def show?
     allows :visible, :admin, :guest
   end
@@ -15,6 +14,15 @@ class UserPolicy < ApplicationPolicy
 
   def destroy?
     allows :admin
+  end
+
+  private
+  def visible?
+    record.visible?
+  end
+
+  def owner?
+    record == user
   end
 
   class Scope < ApplicationPolicy::Scope

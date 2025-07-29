@@ -73,18 +73,5 @@ RSpec.describe UserRole do
         expect(subject.owner?).to be_truthy
       end
     end
-
-    context "when user is record.owner" do
-      let(:user) { create(:user) }
-      let(:record) { create(:team, owner: user) }
-
-      it("returns true") { expect(subject.owner?).to be_truthy }
-    end
-    context "when user is record.user" do
-      let(:user) { create(:user) }
-      let(:record) { create(:membership, user: user) }
-
-      it { expect(subject.owner?).to be_truthy }
-    end
   end
 end

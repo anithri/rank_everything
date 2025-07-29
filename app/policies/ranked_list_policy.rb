@@ -1,6 +1,6 @@
 class RankedListPolicy < ApplicationPolicy
 
-  ROLE_CLASS = TeamMembershipRole.freeze
+  ROLE_CLASS = MembershipRole.freeze
 
   def team
     record.team

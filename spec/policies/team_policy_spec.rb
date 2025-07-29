@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-CRUD_ACTIONS = %i[show new create edit update destroy]
-
 RSpec.describe TeamPolicy, type: :policy do
   subject { described_class.new(current_user, current_team) }
 

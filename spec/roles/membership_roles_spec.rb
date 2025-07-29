@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe TeamMembershipRole do
-  subject { described_class.new(user, team) }
+RSpec.describe MembershipRole do
+  subject { described_class.new(user, membership) }
   let(:membership) { create(:membership) }
   let(:user) { membership.user }
   let(:team) { membership.team }
@@ -53,10 +53,10 @@ RSpec.describe TeamMembershipRole do
     context "when member user, with different role" do
       # create another user and create a membership for them with a different role
       let(:another_user) { create :user }
-      let(:not_voter) { create :membership, user: another_user, team: team, role: "contributor" }
+      let(:not_voter_member) { create :membership, user: another_user, team: team, role: "contributor" }
 
       it "returns false" do
-        policy = described_class.new(another_user, team)
+        policy = described_class.new(another_user, not_voter_member)
         expect(policy.voter?).to be_falsey
       end
     end
@@ -80,10 +80,10 @@ RSpec.describe TeamMembershipRole do
     context "when member user, with different role" do
       # create another user and create a membership for them with a different role
       let(:another_user) { create :user }
-      let(:not_contributor) { create :membership, user: another_user, team: team, role: "voter" }
+      let(:not_contributor_member) { create :membership, user: another_user, team: team, role: "voter" }
 
       it "returns false" do
-        policy = described_class.new(another_user, team)
+        policy = described_class.new(another_user, not_contributor_member)
         expect(policy.contributor?).to be_falsey
       end
     end
@@ -115,10 +115,10 @@ RSpec.describe TeamMembershipRole do
     context "when member user, with different role" do
       # create another user and create a membership for them with a different role
       let(:another_user) { create :user }
-      let(:not_editor) { create :membership, user: another_user, team: team, role: "voter" }
+      let(:not_editor_member) { create :membership, user: another_user, team: team, role: "voter" }
 
       it "returns false" do
-        policy = described_class.new(another_user, team)
+        policy = described_class.new(another_user, not_editor_member)
         expect(policy.editor?).to be_falsey
       end
     end
@@ -150,10 +150,10 @@ RSpec.describe TeamMembershipRole do
     context "when member user, with different role" do
       # create another user and create a membership for them with a different role
       let(:another_user) { create :user }
-      let(:not_manager) { create :membership, user: another_user, team: team, role: "voter" }
+      let(:not_manager_member) { create :membership, user: another_user, team: team, role: "voter" }
 
       it "returns false" do
-        policy = described_class.new(another_user, team)
+        policy = described_class.new(another_user, not_manager_member)
         expect(policy.manager?).to be_falsey
       end
     end
