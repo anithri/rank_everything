@@ -2,10 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe RankedListRole do
-  subject { described_class.new(user, membership) }
-  let(:ranked_list) { create(:ranked_list) }
-  let(:user) { membership.user }
-  let(:team) { membership.team }
+  subject { described_class.new(user, ranked_list) }
+  let(:user) { create(:user) }
+  let(:team) { create(:team, owner: create(:user)) }
+  let(:owned_team) { create(:team, owner: user) }
+  let(:ranked_list) { create(:ranked_list, team: team) }
 
   describe "#guest? and public?" do
     context "when user is not logged in" do
@@ -24,18 +25,18 @@ RSpec.describe RankedListRole do
   describe "#member?" do
     context "when no user" do
       let(:user) { nil }
-
       it { expect(subject.member?).to be_falsey }
     end
 
     context "when non member user" do
-      let(:user) { create(:user) }
-
       it { expect(subject.member?).to be_falsey }
     end
 
     context "when member user" do
-      it { expect(subject.member?).to be_truthy }
+      before { team.memberships << create(:membership, user:)  }
+      it do
+        expect(subject.member?).to be_truthy
+      end
     end
   end
 
@@ -46,11 +47,12 @@ RSpec.describe RankedListRole do
     end
 
     context "when non member use" do
-      let(:user) { create(:user) }
       it { expect(subject.voter?).to be_falsey }
     end
 
     context "when member user, with different role" do
+      let(:membership) { create(:membership, user:, team:) }
+
       # create another user and create a membership for them with a different role
       let(:another_user) { create :user }
       let(:not_voter_member) { create :membership, user: another_user, team: team, role: "contributor" }
@@ -62,6 +64,7 @@ RSpec.describe RankedListRole do
     end
 
     context "when member user has the voter role" do
+      before { team.memberships << create(:membership, user:)  }
       it { expect(subject.voter?).to be_truthy }
     end
   end
@@ -73,7 +76,6 @@ RSpec.describe RankedListRole do
     end
 
     context "when non member use" do
-      let(:user) { create(:user) }
       it { expect(subject.contributor?).to be_falsey }
     end
 
@@ -89,7 +91,7 @@ RSpec.describe RankedListRole do
     end
 
     context "when member user has the contributor role" do
-      let(:membership) { create(:membership, role: "contributor") }
+      before { team.memberships << create(:membership, user:, role: "contributor")  }
 
       it "returns true" do
         expect(subject.contributor?).to be_truthy
@@ -124,7 +126,7 @@ RSpec.describe RankedListRole do
     end
 
     context "when member user has the editor role" do
-      let(:membership) { create(:membership, role: "editor") }
+      before { team.memberships << create(:membership, user:, role: "editor")  }
 
       it "returns true" do
         expect(subject.editor?).to be_truthy
@@ -159,7 +161,7 @@ RSpec.describe RankedListRole do
     end
 
     context "when member user has the manager role" do
-      let(:membership) { create(:membership, role: "manager") }
+      before { team.memberships << create(:membership, user:, role: "manager")  }
 
       it { expect(subject.manager?).to be_truthy }
     end

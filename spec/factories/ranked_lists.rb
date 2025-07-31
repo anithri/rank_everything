@@ -2,11 +2,11 @@ FactoryBot.define do
   factory :ranked_list do
     sequence(:name) { |n| "MyString %04d" % n }
     description { "MyText" }
-    ranking_method { 1 }
+    ranking_method { :simple_voting }
     team { association :team }
     visible { false }
-    items_count { 1 }
-    votes_count { 1 }
+    items_count { 0 }
+    votes_count { 0 }
   end
 end
 

@@ -5,10 +5,6 @@ class RankedListRole < TeamRole
     record.team
   end
 
-  def role
-    team.memberships.find_by(user: user).try(:role)
-  end
-
   def visible?
     team.visible?
   end

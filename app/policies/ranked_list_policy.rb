@@ -1,25 +1,30 @@
 class RankedListPolicy < ApplicationPolicy
 
-  ROLE_CLASS = MembershipRole.freeze
+  ROLE_CLASS = RankedListRole.freeze
 
   def team
     record.team
   end
 
   def show?
-    visible? || contributor? || manager? || editor? || team_owner?
+    allows :visible, :admin, :owner, :manager, :editor, :contributor
   end
 
   def create?
-    admin? || team_owner? || manager?
+    allow :admin, :owner, :manager
   end
 
   def update?
-    admin? || team_owner? || manager? || editor?
+    allows :admin, :owner, :manager, :editor
   end
 
   def destroy?
-    admin? || team_owner?
+    allows :admin, :owner
+  end
+
+  private
+  def owner?
+    team.owner == user
   end
 
   class Scope < ApplicationPolicy::Scope
