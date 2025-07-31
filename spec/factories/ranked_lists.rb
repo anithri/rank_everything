@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :ranked_list do
-    name { "MyString" }
+    sequence(:name) { |n| "MyString %04d" % n }
     description { "MyText" }
     ranking_method { 1 }
-    team { nil }
+    team { association :team }
     visible { false }
     items_count { 1 }
     votes_count { 1 }
