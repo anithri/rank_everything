@@ -64,6 +64,5 @@ class ApplicationPolicy
     def resolve
       raise NoMethodError, "You must define #resolve in #{self.class}"
     end
-
   end
 end

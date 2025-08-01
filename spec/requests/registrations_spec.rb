@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe "Registrations", type: :request do
-
   context "as guest user" do
     describe "GET /registration/new" do
       it "returns https success" do
@@ -47,6 +46,4 @@ RSpec.describe "Registrations", type: :request do
       end
     end
   end
-
 end
-

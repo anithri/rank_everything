@@ -53,7 +53,6 @@ RSpec.describe RankedListPolicy, type: :policy do
       team.memberships << create(:membership, user: user, role: :contributor)
       expect(subject.show?).to be_truthy
     end
-
   end
 
   permissions :create?, :new do

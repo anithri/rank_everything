@@ -14,7 +14,6 @@ class RankedList < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :team_id }, length: { minimum: 8, maximum: 64 }
   validates :ranking_method, presence: true
   validates :team, presence: true
-
 end
 
 # == Schema Information

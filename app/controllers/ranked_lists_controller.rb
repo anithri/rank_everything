@@ -98,6 +98,6 @@ class RankedListsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def ranked_list_params
-    params.expect(ranked_list: [:name, :description, :ranking_method, :visible, :items_count, :votes_count])
+    params.expect(ranked_list: [ :name, :description, :ranking_method, :visible, :items_count, :votes_count ])
   end
 end

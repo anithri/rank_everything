@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # concern for user based roles
 class UserRole < ApplicationRole
   # @return [Boolean] true if user is not present

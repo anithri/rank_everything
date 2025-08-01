@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe RankedListRole do
@@ -167,4 +168,3 @@ RSpec.describe RankedListRole do
     end
   end
 end
-

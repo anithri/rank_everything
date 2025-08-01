@@ -98,6 +98,6 @@ class MembershipsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def membership_params
-    params.expect(membership: [:team_id, :user_id, :role])
+    params.expect(membership: [ :team_id, :user_id, :role ])
   end
 end

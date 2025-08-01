@@ -1,5 +1,4 @@
 class RankedListPolicy < ApplicationPolicy
-
   ROLE_CLASS = RankedListRole.freeze
 
   def team
@@ -28,7 +27,6 @@ class RankedListPolicy < ApplicationPolicy
   end
 
   class Scope < ApplicationPolicy::Scope
-
     def resolve
       return scope.none unless user
       return scope.all if user.admin?

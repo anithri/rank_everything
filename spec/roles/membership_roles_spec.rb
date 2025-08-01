@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe MembershipRole do
@@ -165,4 +166,3 @@ RSpec.describe MembershipRole do
     end
   end
 end
-

@@ -31,6 +31,6 @@ class RegistrationsController < ApplicationController
   def user_params
     params.require(:user)
           .permit(:name, :email_address, :password, :password_confirmation)
-          # .tap {|p| warn p.inspect }
+    # .tap {|p| warn p.inspect }
   end
 end

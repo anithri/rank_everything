@@ -19,7 +19,6 @@ RSpec.describe RankedList, type: :model do
   describe "macros" do
     it { is_expected.to define_enum_for(:ranking_method).with_values(simple_voting: 0) }
   end
-
 end
 
 # == Schema Information

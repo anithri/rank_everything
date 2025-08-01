@@ -12,6 +12,6 @@ class CreateRankedLists < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :ranked_lists, [:name, :team_id], unique: true
+    add_index :ranked_lists, [ :name, :team_id ], unique: true
   end
 end

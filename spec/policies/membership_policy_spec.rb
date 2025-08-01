@@ -41,5 +41,4 @@ RSpec.describe MembershipPolicy, type: :policy do
     # can show
     # can vote on open lists
   end
-
 end

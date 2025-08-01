@@ -10,7 +10,6 @@ RSpec.describe Team, type: :model do
     it { is_expected.to have_many(:memberships).dependent(:destroy) }
     it { is_expected.to have_many(:members).through(:memberships).source(:user) }
     it { is_expected.to have_many(:ranked_lists).dependent(:destroy) }
-
   end
 
   describe "validations" do

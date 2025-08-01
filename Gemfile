@@ -75,4 +75,3 @@ gem "rails_icons", "~> 1.3"
 gem "breadcrumbs_on_rails", "~> 4.1"
 
 gem "pundit", "~> 2.5"
-

@@ -65,4 +65,3 @@ album_list =  RankedList.create(
     name: "Favorite Albums",
     description: "What do you love to listen to?",
   )
-
