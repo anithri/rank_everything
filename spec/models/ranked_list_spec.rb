@@ -1,7 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe RankedList, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:min) { RankedList::MIN_NAME_LENGTH }
+  let(:max) { RankedList::MAX_NAME_LENGTH }
+
+  describe "associations" do
+    it { is_expected.to belong_to(:team) }
+  end
+
+  describe "validations" do
+    subject { create(:ranked_list) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:ranking_method) }
+    it { is_expected.to validate_length_of(:name).is_at_least(min).is_at_most(max) }
+    it { is_expected.to validate_uniqueness_of(:name).scoped_to(:team_id) }
+  end
+
+  describe "macros" do
+    it { is_expected.to define_enum_for(:ranking_method).with_values(simple_voting: 0) }
+  end
+
 end
 
 # == Schema Information

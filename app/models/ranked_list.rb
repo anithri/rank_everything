@@ -1,13 +1,20 @@
 class RankedList < ApplicationRecord
+  MIN_NAME_LENGTH = 8
+  MAX_NAME_LENGTH = 64
   enum :ranking_method, {
     simple_voting: 0
   }
   belongs_to :team
 
-  scope :visible, -> { includes(:team).where(team: { visible: true }) }
 
   # has_many :list_items, dependent: :destroy
   # has_many :votes, dependent: :destroy
+  scope :visible, -> { includes(:team).where(team: { visible: true }) }
+
+  validates :name, presence: true, uniqueness: { scope: :team_id }, length: { minimum: 8, maximum: 64 }
+  validates :ranking_method, presence: true
+  validates :team, presence: true
+
 end
 
 # == Schema Information

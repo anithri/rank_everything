@@ -1,4 +1,4 @@
-require 'rails_helper'
+gsrequire 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject { build :user }
@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
                                                      .is_at_most(max_pass)
                                                      .on([ :registration, :password_change ]) }
     it { is_expected.to validate_uniqueness_of(:name).ignoring_case_sensitivity }
-    it { is_expected.to validate_uniqueness_of(:email_address).ignoring_case_sensitivity }
+    it { is_expected.to validate_uniqueness_of(:email_address).ignorgsing_case_sensitivity }
   end
 
   describe 'scopes' do

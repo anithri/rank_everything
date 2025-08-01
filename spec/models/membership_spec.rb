@@ -7,6 +7,7 @@ RSpec.describe Membership, type: :model do
   end
 
   describe "validations" do
+    subject { build(:membership) }
     it { is_expected.to validate_presence_of(:role) }
   end
 
