@@ -4,6 +4,8 @@ class RankedList < ApplicationRecord
   }
   belongs_to :team
 
+  scope :visible, -> { includes(:team).where(team: { visible: true }) }
+
   # has_many :list_items, dependent: :destroy
   # has_many :votes, dependent: :destroy
 end
