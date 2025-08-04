@@ -1,9 +1,7 @@
 # Rank Everything
 
 This is a Ruby On Rails 8 site that allows lists that can be ranked in multiple ways.  Ranking methods may include
-Voting, Fiat and Comparison.
-
-We are using TailwindCSS, DaisyUI, Pundit, Rails 8 Authorization and Rspec among other libraries.
+Voting, Insertion and Comparison modes..
 
 ## Schema
 * Session to manage login state
@@ -28,10 +26,23 @@ I'm unsure how the RankingMethods will work, and it may need multiple methods
  * [x] User Model
  * [x] Team Model
  * [x] TeamRole Model
- * [ ] RankedList Model
- * [ ] ListRole Model
+ * [X] RankedList Model
  * [ ] RankedItem Model
  * [ ] RankingMethod Model
  * [ ] Vote Model
  * [ ] determine voting method, vote model, history and statistics
- * [ ] Schema Finalized 
+ * [ ] Schema Finalized
+
+## Views
+I'm using TailwindCSS and DaisyUI for the views. Will work out working versions now, and will do another pass for
+usability and beautification.
+
+## Security
+Rank Everything uses the Rails 8 authentication system, expanded to allow registrations.  It also uses Pundit for
+authorization.  We use two modes for authorization.   One based on the user, and the other based on the team.  The
+user mode provides guest, public, user, and admin access.  The team mode provides manager, editor, contributor, voter,
+and member roles that are assigned to a user/team combination.
+
+## RSpec testing
+We are using RSpec for testing. I'm writing specs for models, roles, and policies, but pushing the request specs until
+things there are more stable.
