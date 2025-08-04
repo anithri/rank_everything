@@ -1,7 +1,7 @@
 # Rank Everything
 
 This is a Ruby On Rails 8 site that allows lists that can be ranked in multiple ways.  Ranking methods may include
-Voting, Insertion and Comparison modes..
+voting, fiat insertion and comparison modes.
 
 ## Schema
 * Session to manage login state
