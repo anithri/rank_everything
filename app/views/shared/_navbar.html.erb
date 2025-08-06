@@ -1,29 +1,57 @@
 <!-- Navbar -->
-<nav class="navbar justify-between bg-base-300 items-center">
-  <div class="flex flex-row align-center">
+<nav class="navbar bg-base-300">
+  <div class="flex-1">
     <a class="btn btn-ghost text-lg" href="/">
       <%= heroicon "numbered-list", class: "size-6" %>
       Rank Everything
     </a>
-    <nav class="breadcrumbs text-sm inline-block">
+    <nav class="breadcrumbs text-sm hidden md:inline-block">
       <ul class="pt-1">
         <%= render_breadcrumbs tag: :li, separator: "" %>
       </ul>
     </nav>
   </div>
 
-  <!-- Menu for mobile -->
-  <ul class="menu lg:menu-horizontal bg-base-200 rounded-box">
-    <li><%= link_to "About", about_path %></li>
-    <li><%= link_to "Users", users_path %></li>
-    <li><%= link_to "Teams", teams_path %></li>
-    <% if Current.user %>
-      <li><%= link_to "Logout", session_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: '_top' } %></li>
-      <li><%= link_to Current.user.name, user_path(Current.user) %></li>
-    <% else %>
-      <li><%= link_to "Login", new_session_path %></li>
-      <li><%= link_to "Signup", new_registration_path %></li>
-    <% end %>
-  </ul>
-</nav>
+  <!-- Mobile menu button -->
+  <div class="flex-none md:hidden">
+    <label for="navbar-menu" class="btn btn-square btn-ghost">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </label>
+  </div>
 
+  <!-- Menu items -->
+  <div class="flex-none hidden md:block">
+    <ul class="menu menu-horizontal px-1">
+      <li><%= link_to "About", about_path %></li>
+      <li><%= link_to "Users", users_path %></li>
+      <li><%= link_to "Teams", teams_path %></li>
+      <% if Current.user %>
+        <li><%= link_to "Logout", session_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: '_top' } %></li>
+        <li><%= link_to Current.user.name, user_path(Current.user) %></li>
+      <% else %>
+        <li><%= link_to "Login", new_session_path %></li>
+        <li><%= link_to "Signup", new_registration_path %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- Mobile menu dropdown -->
+  <div class="dropdown dropdown-end md:hidden">
+    <input type="checkbox" id="navbar-menu" class="drawer-toggle" />
+    <div tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52">
+      <li><%= link_to "About", about_path %></li>
+      <li><%= link_to "Users", users_path %></li>
+      <li><%= link_to "Teams", teams_path %></li>
+      <% if Current.user %>
+        <li><%= link_to "Logout", session_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: '_top' } %></li>
+        <li><%= link_to Current.user.name, user_path(Current.user) %></li>
+      <% else %>
+        <li><%= link_to "Login", new_session_path %></li>
+        <li><%= link_to "Signup", new_registration_path %></li>
+      <% end %>
+    </div>
+  </div>
+</nav>
+<%= render "shared/flash_messages", flash: flash %>
