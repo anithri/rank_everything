@@ -1,50 +1,27 @@
-<% content_for :title, "Showing team" %>
+<% content_for :title, @team.name %>
 
-<div class="md:w-2/3 w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
-  <h1 class="font-bold text-4xl"><%= @team.name %></h1>
-
-  <%= render @team %>
-
-  <% if TeamPolicy.new(Current.user, @team).edit? %>
-    <%= link_to "Edit this team", edit_team_path(@team), class: "btn btn-primary" %>
-  <% end %>
-  <%= link_to "Back to teams", teams_path, class: "btn btn-info" %>
-
-  <div class="flex justify-between">
-    <%= turbo_frame_tag "memberships", src: team_memberships_path(@team) do %>
-      Waiting for members to load
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
+  <div class="flex flex-col items-center w-full text-center grow lg:grow-0">
+    <div class="flex flex-row items-center w-full grow-0">
+      <%= link_to teams_path, class: "btn btn-ghost btn-sm" do %>
+        <%= heroicon "arrow-uturn-left", options: { class: "h-5 w-5" } %>
+      <% end %>
+      <h1 class="font-bold text-4xl w-full text-center">
+        <%= @team.name %>
+      </h1>
+    </div>
+    <p class="prose-sm text-left"><%= @team.description %></p>
+    <% if TeamPolicy.new(Current.user, @team).edit? %>
+      <%= link_to "Edit this team", edit_team_path(@team), class: "btn btn-primary btn-sm" %>
     <% end %>
-
-    <%= turbo_frame_tag "ranked_lists", src: team_ranked_lists_path(@team) do %>
-      Waiting for lists to load
-    <% end %>
+    <%= link_to "Back to teams", teams_path, class: "btn btn-info btn-sm" %>
   </div>
 
-</div>
+  <%= turbo_frame_tag "ranked_lists", src: team_ranked_lists_path(@team) do %>
+    Waiting for lists to load
+  <% end %>
 
-<!--<h1>Members</h1>-->
-<!--<table class="table table-borderless">-->
-<!--  <thead>-->
-<!--  <tr>-->
-<!--    <th>Name</th>-->
-<!--    <th>Role</th>-->
-<!--  </tr>-->
-<!--  </thead>-->
-<!--  <tbody>-->
-  <%# @team.memberships.each do |member| %>
-<!--    <tr>-->
-<!--      <td>-->
-        <%#= member.user.name %>
-<!--      </td>-->
-<!--      <td>-->
-        <%#= member.role.titleize %>
-<!--      </td>-->
-<!--    </tr>-->
-  <%# end %>
-<!--  </tbody>-->
-<!--</table>-->
+  <%= turbo_frame_tag "memberships", src: team_memberships_path(@team) do %>
+    Waiting for members to load
+  <% end %>
 </div>

@@ -1,13 +1,9 @@
 <% content_for :title, "Teams" %>
 
 <div class="container">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
   <div class="flex justify-between items-center content-center py-2">
     <h1 class="font-bold text-4xl">Teams</h1>
-    <%= link_to "New team", new_team_path, class: "btn btn-accent py-2" %>
+    <%= link_to "New team", new_team_path, class: "btn btn-accent btn-sm py-2" %>
   </div>
 
   <div id="teams" class="min-w-full">

@@ -25,6 +25,7 @@ module Authorization
 
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
+    warn "User not authorized to perform action: #{action_name}"
     redirect_back_or_to(root_path)
   end
 end

@@ -1,5 +1,5 @@
 <div id="<%= dom_id team %>" class="w-full sm:w-auto space-x-5 ">
-  <%- if team.visible %>
+  <% if team.visible? %>
     <span class="badge badge-success badge-sm badge-soft ml-2">
       <%= heroicon(:eye) %>
     </span>
@@ -9,7 +9,7 @@
     </span>
   <% end %>
   <span>
-    <%= team.name %>
+    <%= link_to team.name, team_path(team) %>
   </span>
   <% if team.owner.visible? %>
     <span><%= team.owner.name %></span>

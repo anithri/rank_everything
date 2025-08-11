@@ -1,10 +1,16 @@
 <% if flash.any? %>
   <div class="toast toast-top toast-center">
     <% if flash[:notice] %>
-      <%= render "shared/flash_message", style: "info", content: flash[:notice] %>
+      <%= render "shared/flash_notice", content: flash[:notice] %>
     <% end %>
     <% if flash[:alert] %>
-      <%= render "shared/flash_message", style: "error", content: flash[:alert] %>
+      <%= render "shared/flash_alert", content: flash[:alert] %>
     <% end %>
   </div>
 <% end %>
+
+<!-- FIXME split flash_message.html.erb into two partials
+     due to defining the alert- class via code
+     therefor it won't be picked up by tailwindcss
+     there is surely a better way to do this
+->

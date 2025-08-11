@@ -10,8 +10,9 @@ class TeamsController < ApplicationController
 
   # GET /teams/1 or /teams/1.json
   def show
-    authorize Current.user
-
+    authorize @team
+    flash[:notice] = "Wooticus Prime!!!"
+    flash[:alert] = "WooHoo"
     add_breadcrumb "Teams", teams_path
     add_breadcrumb @team.name, team_path(@team)
   end

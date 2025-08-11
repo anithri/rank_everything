@@ -9,7 +9,6 @@ voting, fiat insertion and comparison modes.
   * Team to allow multiple users to collaborate on lists
     * TeamRoles - pending - gives a user a specific type of role for the team
     * RankedLists - pending - A list to be ranked
-      * ListRoles - considering? - list specific roles but adds complexity
       * RankingMethod - pending - data for specific ranking methods 
       * RankedItem - pending - an individual item to be ranked
         * Vote - pending - a voting event

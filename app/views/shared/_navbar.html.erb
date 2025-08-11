@@ -1,11 +1,11 @@
 <!-- Navbar -->
-<nav class="navbar bg-base-300">
-  <div class="flex-1">
+<header class="navbar bg-base-300 justify-between items-center">
+  <div class="flex flex-row align-center">
     <a class="btn btn-ghost text-lg" href="/">
       <%= heroicon "numbered-list", class: "size-6" %>
       Rank Everything
     </a>
-    <nav class="breadcrumbs text-sm hidden md:inline-block">
+    <nav class="breadcrumbs text-sm hidden inline-block">
       <ul class="pt-1">
         <%= render_breadcrumbs tag: :li, separator: "" %>
       </ul>
@@ -21,6 +21,7 @@
     </label>
   </div>
 
+  <!-- TODO the menu icon needs to be pushed right -->
   <!-- Menu items -->
   <div class="flex-none hidden md:block">
     <ul class="menu menu-horizontal px-1">
@@ -38,8 +39,8 @@
   </div>
 
   <!-- Mobile menu dropdown -->
-  <div class="dropdown dropdown-end md:hidden">
-    <input type="checkbox" id="navbar-menu" class="drawer-toggle" />
+  <div class="dropdown dropdown-end md:hidden justify-self-end">
+    <input type="checkbox" id="navbar-menu" class="drawer-toggle justify-self-end text-right" />
     <div tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52">
       <li><%= link_to "About", about_path %></li>
       <li><%= link_to "Users", users_path %></li>
@@ -53,5 +54,5 @@
       <% end %>
     </div>
   </div>
-</nav>
+</header>
 <%= render "shared/flash_messages", flash: flash %>
