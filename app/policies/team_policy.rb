@@ -6,7 +6,7 @@ class TeamPolicy < UserPolicy
   end
 
   def create?
-    allow :public
+    allows :public
   end
 
   def update?
@@ -14,7 +14,7 @@ class TeamPolicy < UserPolicy
   end
 
   def destroy?
-    allow :admin
+    allows :admin, :owner
   end
 
   private
@@ -29,8 +29,8 @@ class TeamPolicy < UserPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.visible if user
-      scope.all if user.admin?
+      return scope.visible unless user
+      return scope.all if user.admin?
 
       scope.where(owner: user).or(Team.visible).order(:name)
     end

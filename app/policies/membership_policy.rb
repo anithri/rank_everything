@@ -25,13 +25,20 @@ class MembershipPolicy < ApplicationPolicy
     allows :admin, :owner, :manager
   end
 
-  private def owner?
-    team.owner == user
-  end
-
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.all
+      if @user.admin?
+        scope.includes(:team, :user).all
+      elsif @user.nil?
+        scope.includes(:team, :user)
+             .where(users: { visible: true })
+             .order("role desc, users.name asc")
+      else
+        scope.includes(:team, :user)
+             .where(users: { visible: true })
+             .or(scope.includes(:team, :user).where(user: @user))
+             .order("role desc, users.name asc")
+      end
     end
   end
 end
