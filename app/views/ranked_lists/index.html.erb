@@ -1,19 +1,31 @@
-<% content_for :title, "Ranked lists" %>
+<% content_for :title, "Ranked Lists - #{@team.name}" %>
 
 <turbo-frame id="ranked_lists" %>
   <div class="w-full">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="font-bold text-4xl">Ranked lists</h1>
-      <%= link_to "New ranked list", new_team_ranked_list_path(@team), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+      <h1 class="font-bold text-2xl">Ranked lists</h1>
+      <% if CurrentTeam.policy.create? %>
+        <%= link_to "New ranked list", new_team_ranked_list_path(@team), class: "btn btn-accent btn-sm" %>
+      <% end %>
     </div>
 
     <div class="flex justify-between items-center">
-      <div id="ranked_lists" class="min-w-full divide-y divide-gray-200 space-y-5">
+      <div id="ranked_lists" class="w-full gap-4">
         <% if @ranked_lists.any? %>
           <% @ranked_lists.each do |ranked_list| %>
-            <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-              <%= render partial: "list_item", locals: { ranked_list: } %>
-              <div class="join join-horizontal">
+            <% policy = RankedListPolicy.new(Current.user, ranked_list) %>
+            <div class="w-full grid grid-cols-4 pb-5 sm:pb-0 grow-0 odd:bg-base-200 even:bg-base-300 items-center">
+              <span>
+
+                <%= link_to ranked_list.name, ranked_list %>
+              </span>
+              <span>
+                Items: <%= ranked_list.items_count %>
+              </span>
+              <span>
+                Votes: <%= ranked_list.votes_count %>
+              </span>
+              <div class="join join-horizontal  justify-self-end">
                 <%= link_to "Show", ranked_list, class: "btn btn-primary btn-sm join-item" %>
                 <%= link_to "Edit", edit_ranked_list_path(ranked_list), class: "btn-success btn btn-sm join-item" %>
                 <%= button_to "Destroy", ranked_list, method: :delete, class: "btn btn-error btn-sm join-item", data: { turbo_confirm: "Are you sure?" } %>

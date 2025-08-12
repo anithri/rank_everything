@@ -1,10 +1,16 @@
-<div class="flex flex-column align-items-center gap-4 w-full">
+<div class="flex flex-column items-center gap-4 w-full">
   <span class="font-bold">
     <%= link_to membership.user.name, membership_path(membership) %>
   </span>
   <span class="flex-auto text-right"><%= membership.role.titleize %></span>
+  <% if CurrentTeam.policy.edit? || CurrentTeam.policy.destroy? %>
   <span class="join join-horizontal">
-    <%= link_to "Edit", edit_membership_path(membership), class: "btn btn-success btn-sm join-item" %>
-    <%= button_to "Destroy", membership, method: :delete, class: "btn btn-error btn-sm join-item", data: { turbo_confirm: "Are you sure?" } %>
+    <% if CurrentTeam.policy.edit? %>
+      <%= link_to "Edit", edit_membership_path(membership), class: "btn btn-success btn-sm join-item" %>
+    <% end %>
+    <% if CurrentTeam.policy.destroy? %>
+      <%= button_to "Destroy", membership, method: :delete, class: "btn btn-error btn-sm join-item", data: { turbo_confirm: "Are you sure?" } %>
+    <% end %>
   </span>
+  <% end %>
 </div>
