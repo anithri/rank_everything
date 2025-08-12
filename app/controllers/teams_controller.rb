@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :clear_current_team
   before_action :set_team, only: %i[ show edit update ]
 
   # GET /teams or /teams.json
@@ -11,8 +12,6 @@ class TeamsController < ApplicationController
   # GET /teams/1 or /teams/1.json
   def show
     authorize @team
-    flash[:notice] = "Wooticus Prime!!!"
-    flash[:alert] = "WooHoo"
     add_breadcrumb "Teams", teams_path
     add_breadcrumb @team.name, team_path(@team)
   end
@@ -21,6 +20,8 @@ class TeamsController < ApplicationController
   def new
     @team = Team.new
     authorize @team
+
+    CurrentTeam.team = @team
 
     add_breadcrumb "Teams", teams_path
     add_breadcrumb @team.name, team_path(@team)
@@ -40,6 +41,8 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     authorize @team
+
+    CurrentTeam.team = @team
 
     respond_to do |format|
       if @team.save
@@ -69,13 +72,17 @@ class TeamsController < ApplicationController
 
   private
 
+  def clear_current_team
+    CurrentTeam.reset
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_team
-    @team = Team.includes(memberships: :user).find(params.expect(:id))
+    @team = CurrentTeam.team = Team.includes(memberships: :user).find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.
   def team_params
-    params.expect(team: [ :name, :description, :visible, :owner_id ])
+    params.expect(team: [:name, :description, :visible, :owner_id])
   end
 end

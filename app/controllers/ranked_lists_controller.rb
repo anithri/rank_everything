@@ -26,6 +26,8 @@ class RankedListsController < ApplicationController
     @ranked_list = @team.ranked_lists.build
     authorize @ranked_list
 
+    CurrentTeam.team = @team
+
     add_breadcrumb @team.name, team_path(@team)
     add_breadcrumb "Ranked Lists", team_ranked_lists_path(@team)
     add_breadcrumb "New", new_team_ranked_list_path(@team)
@@ -45,6 +47,8 @@ class RankedListsController < ApplicationController
   def create
     @ranked_list = RankedList.new(team: @team, **ranked_list_params)
     authorize @ranked_list
+
+    CurrentTeam.team = @team
 
     respond_to do |format|
       if @ranked_list.save
@@ -89,15 +93,15 @@ class RankedListsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_ranked_list
     @ranked_list = RankedList.includes(team: { memberships: :user }).find(params.expect(:id))
-    @team = @ranked_list.team
+    @team = CurrentTeam.team = @ranked_list.team
   end
 
   def set_team
-    @team = Team.includes(memberships: :user).find(params[:team_id])
+    @team = CurrentTeam.team = Team.includes(memberships: :user).find(params[:team_id])
   end
 
   # Only allow a list of trusted parameters through.
   def ranked_list_params
-    params.expect(ranked_list: [ :name, :description, :ranking_method, :visible, :items_count, :votes_count ])
+    params.expect(ranked_list: [:name, :description, :ranking_method, :visible, :items_count, :votes_count])
   end
 end

@@ -1,4 +1,5 @@
 class MembershipsController < ApplicationController
+  before_action :reset_current_team
   before_action :set_membership, only: %i[ show edit update destroy ]
   before_action :set_team, only: %i[ index new create ]
 
@@ -86,18 +87,23 @@ class MembershipsController < ApplicationController
 
   private
 
+  def reset_current_team
+    CurrentTeam.reset
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_membership
     @membership = Membership.includes(:user, :team).find(params.expect(:id))
-    @team = @membership.team
+    @team = CurrentTeam.team = @membership.team
   end
 
   def set_team
-    @team = Team.find(params[:team_id])
+    @team = CurrentTeam.team = Team.find(params[:team_id])
   end
 
   # Only allow a list of trusted parameters through.
   def membership_params
-    params.expect(membership: [ :team_id, :user_id, :role ])
+    # TODO add role validation to allow only valid roles for the current user
+    params.expect(membership: [:team_id, :user_id, :role])
   end
 end
